@@ -1,0 +1,4 @@
+# lingdata
+hi
+
+hi
