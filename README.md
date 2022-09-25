@@ -1,4 +1,1 @@
-# lingdata
-hi
 
-hi
