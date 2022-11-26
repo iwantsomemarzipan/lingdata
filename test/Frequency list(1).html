@@ -1,0 +1,992 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!-- saved from url=(0216)http://aranea.juls.savba.sk/guest/run.cgi/freqs?q=aword%2C%5Blemma%3D%22%D0%B8%D0%B7%D1%83%D1%87%D0%B0%D1%82%D1%8C%22%5D+%5Btag%3D%22Nc..a.%2A%22%5D;corpname=AranRusj_x&refs=%3Ddoc.urldomain;fcrit=word/e+0~0%3E0;ml=1 -->
+<html xmlns="http://www.w3.org/1999/xhtml"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><title>
+Frequency list</title>
+
+<link rel="icon" href="http://aranea.juls.savba.sk/guest/img/favicon.ico">
+<link rel="stylesheet" type="text/css" href="./Frequency list(1)_files/font-awesome.min.css">
+<link rel="stylesheet" type="text/css" href="./Frequency list(1)_files/bonito.css">
+<link rel="stylesheet" type="text/css" href="./Frequency list(1)_files/print_bonito.css" media="print">
+<script src="./Frequency list(1)_files/jquery-1.7.2.js.Без названия" type="text/javascript"></script>
+<script type="text/javascript">jQuery.noConflict();</script>
+<script src="./Frequency list(1)_files/jquery.autocomplete.js.Без названия" type="text/javascript"></script>
+<script src="./Frequency list(1)_files/jquery.cookies.js.Без названия" type="text/javascript"></script>
+<script src="./Frequency list(1)_files/misc.js.Без названия" type="text/javascript"></script>
+<script src="./Frequency list(1)_files/jquery-ui.min.js.Без названия" type="text/javascript"></script>
+<script type="text/javascript">
+jQuery(document).ready(function () {
+  jQuery('[name="uilang"]').val("en");
+  jQuery('#a_reset_options').click(function () {
+    jQuery.cookies.del('last_sample_size');
+    jQuery.cookies.del('errstdq');
+    jQuery.cookies.del('ff_main_state');
+    jQuery.cookies.del('contextel_view');
+    jQuery.cookies.del('texttypeel_view');
+    jQuery.cookies.del('concdesc_view');
+    jQuery.ajax({
+      url: 'reset_user_options',
+      async: false,
+      complete: function () {
+        window.location.reload();
+      }
+    });
+  });
+  jQuery('#corpus-search-form').hover(function () {
+    var cc = jQuery('#corpus-search-form option:selected').text();
+    jQuery('#ssearch_info').html('Search in <b>' + cc + '</b>').show();
+  },
+  function () {
+    jQuery('#ssearch_info').hide();
+  });
+});
+
+</script>
+
+
+
+
+
+</head>
+
+<body onload=";">
+
+<noscript>
+For full functionality of Sketch Engine it is necessary to
+<a href="http://www.enable-javascript.com" target="_blank">enable JavaScript</a>
+</noscript>
+
+<form title="Feedback form" id="feedback_form">
+  <input type="hidden" name="feedback_url" id="feedback_url" value="http%3A%2F%2Faranea.juls.savba.sk%2Fguest%2Frun.cgi%2Ffreqs%3Fq%3Daword%252C%255Blemma%253D%2522%25D0%25B8%25D0%25B7%25D1%2583%25D1%2587%25D0%25B0%25D1%2582%25D1%258C%2522%255D%2B%255Btag%253D%2522Nc..a.%252A%2522%255D%3Bcorpname%3DAranRusj_x%26refs%3D%253Ddoc.urldomain%3Bfcrit%3Dword%2Fe%2B0~0%253E0%3Bml%3D1">
+  <input type="hidden" name="navigator" id="navigator" value="Mozilla%2F5.0%20(Windows%20NT%2010.0%3B%20Win64%3B%20x64)%20AppleWebKit%2F537.36%20(KHTML%2C%20like%20Gecko)%20Chrome%2F107.0.0.0%20Safari%2F537.36">
+  <input type="hidden" name="feedback_user" value="guest">
+  <input type="hidden" name="feedback_corpname" value="AranRusj_x">
+  <textarea style="display: none;" name="feedback_error" cols="20" rows="5">    
+  </textarea>
+  <p>Please, provide a detailed description of the issue.<br>
+      Corpus, settings, query and your username are sent automatically.</p>
+  <textarea name="feedback_text" cols="50" rows="10"></textarea>
+    <label>Email:&nbsp;</label><input type="text" name="feedback_email" value="">
+    <br>
+  <input id="feedback_attach" type="file" name="attachment">
+  <input id="feedback_submit" type="submit" value="Send feedback">
+  <script type="text/javascript">
+    document.getElementById('feedback_url').value = encodeURIComponent(window.location.href);
+    document.getElementById('navigator').value = encodeURIComponent(navigator.userAgent);
+    jQuery(document).ready(function () {
+      jQuery('#feedback_link').click(function () {
+        jQuery('#feedback_form input').prop('disabled', false);
+        jQuery('#feedback_form').dialog({
+          width: 'auto',
+          closeText: 'Close'
+        });
+      });
+      jQuery('#feedback_submit').click(function (e) {
+        e.preventDefault();
+        e.stopImmediatePropagation();
+        if (jQuery('textarea[name="feedback_text"]').val() == '') {
+          jQuery('textarea[name="feedback_text"]').focus().css('border-color', 'red');
+          return false;
+        }
+        else {
+          jQuery('textarea[name="feedback_text"]').focus().css('border-color', 'black');
+        }
+        var ev = jQuery('[name="feedback_email"]').val();
+        if (ev == '' || !/^.+@.+\..+$/.test(ev)) {
+          jQuery('[name="feedback_email"]').focus().css('border-color', 'red');
+          return false;
+        }
+        var fd = new FormData(jQuery('#feedback_form')[0])
+        jQuery.ajax({
+          url: 'feedback',
+          data: fd,
+          contentType: false,
+          processData: false,
+          type: 'POST',
+          success: function (data) {
+            alert(data);
+          }
+        });
+        jQuery('#feedback_form').dialog('close');
+        // reset the form
+        jQuery('textarea[name="feedback_text"]').val('')
+        var fe = jQuery('#feedback_attach')
+        fe.wrap('<form>').closest('form').get(0).reset()
+        fe.unwrap()
+      });
+    });
+  </script>
+</form>
+
+
+<div id="ske_header">
+  <a href="http://aranea.juls.savba.sk/guest/index.html" title="Sketch Engine homepage">
+    <img id="logo" src="./Frequency list(1)_files/logo.png" alt="Sketch Engine logo"></a>
+
+  <form id="corpus-search-form" action="http://aranea.juls.savba.sk/guest/run.cgi/first">
+    <div>
+      <span id="ssearch_info" style="display: none;">Search in <b>Araneum Russicum Russicum Minus (Russia-only Russian, 15.03) 120 M</b></span>
+      <input type="text" name="iquery" value="" id="ssearch_query" class="check_input empty" size="16">
+      <select name="corpname">
+        <option value="AjdiArab_y">Ajdir Arabicum Parvus (Arabic) 49,7 M</option>
+        <option value="AranAngl_x">Araneum Anglicum II Minus (Global English, 17.06) 120 M</option>
+        <option value="AranAngm_x">Araneum Anglicum Africanum Minus (African English, 15.04) 120 M</option>
+        <option value="AranAngn_x">Araneum Anglicum Asiaticum Minus (Asian English, 15.04) 120 M</option>
+        <option value="AranArab_x">Araneum Arabicum Minus (Arabic, 17.03) 120 M</option>
+        <option value="AranBohe_x">Araneum Bohemicum IV Minus (Czech, 20.03) 125 M</option>
+        <option value="AranBulg_x">Araneum Bulgaricum Minus (Bulgarian, 16.05) 120 M</option>
+        <option value="AranDaco_x">Araneum Dacoromanicum Minus (Romanian, 18.09) 125 M</option>
+        <option value="AranEsto_x">Araneum Estonicum II Duplex D Minus (Estonian, 19.09) 125 M</option>
+        <option value="AranFinn_x">Araneum Finnicum Minus (Finnish, 15.04) 119 M</option>
+        <option value="AranFrAf_x">Araneum Francogallicum Africanum II Minus (African French, 20.05) 125 M</option>
+        <option value="AranFrBe_x">Araneum Francogallicum Belgicum Minus (Belgian French, 20.05) 125 M</option>
+        <option value="AranFrCa_x">Araneum Francogallicum Canadiense II Minus (Canadian French, 20.05) 125 M</option>
+        <option value="AranFrGa_x">Araneum Francogallicum Gallicum Minus (French French, 20.05) 125 M</option>
+        <option value="AranFrHe_x">Araneum Francogallicum Helveticum Minus (Swiss French, 20.05) 125 M</option>
+        <option value="AranFran_x">Araneum Francogallicum III Minus (Global French, 20.05) 125 M</option>
+        <option value="AranFrao_x">Araneum Francogallicum Africanum Minus (African French, 17.02) 120 M</option>
+        <option value="AranFrap_x">Araneum Francogallicum Canadiense Minus (Canadian French, 18.03) 120 M</option>
+        <option value="AranGeAu_x">Araneum Germanicum Austriacum Minus (Austrian German, 20.06) 125 M</option>
+        <option value="AranGeGe_x">Araneum Germanicum Germanicum Minus (German German, 20.06) 125 M</option>
+        <option value="AranGeHe_x">Araneum Germanicum Helveticum Minus (Swiss German, 20.06) 125 M</option>
+        <option value="AranGeor_x">Araneum Georgianum Minus (Georgian, 18.08) 120 M</option>
+        <option value="AranGerm_x">Araneum Germanicum III Minus (German, 20.06) 125 M</option>
+        <option value="AranHisp_x">Araneum Hispanicum Minus (Spanish, 15.04) 121 M</option>
+        <option value="AranHung_x">Araneum Hungaricum Minus (Hungarian, 14.12) 119 M</option>
+        <option value="AranItal_x">Araneum Italicum Minus (Italian, 14.12) 119 M</option>
+        <option value="AranLati_y">Araneum Latinum Parvum (Latin, 18.11) 109 M</option>
+        <option value="AranLett_x">Araneum Lettonicum Minus (Latvian, 18.09) 125 M</option>
+        <option value="AranNede_x">Araneum Nederlandicum Minus (Dutch, 15.02) 119 M</option>
+        <option value="AranPers_x">Araneum Persicum Beta Minus (Persian, 22.10.ter) 125 M</option>
+        <option value="AranPolo_x">Araneum Polonicum Minus (Polish, 15.02) 119 M</option>
+        <option value="AranPort_x">Araneum Portugallicum Minus (Portuguese, 15.05) 120 M</option>
+        <option value="AranRusi_x">Araneum Russicum III Minus (Russian, 19.03) 125 M</option>
+        <option value="AranRusj_x" selected="selected">Araneum Russicum Russicum Minus (Russia-only Russian, 15.03) 120 M</option>
+        <option value="AranRusk_x">Araneum Russicum Externum Minus (non-Russia Russian, 15.03) 120 M</option>
+        <option value="AranSini_x">Araneum Sinicum Minus (Chinese (simplified), 15.11) 120 M</option>
+        <option value="AranSlov_x">Araneum Slovacum VI Minus Beta (Slovak, 22.01) 125 M</option>
+        <option value="AranSued_x">Araneum Suedicum Minus (Swedish, 17.03) 120 M</option>
+        <option value="AranUcra_x">Araneum Ucrainicum Beta Minus (Ukrainian, 22.08) 125 M</option>
+        <option value="AranUzbe_x">Araneum Uzbecicum Minus (Uzbek, 21.01) 125 M</option>
+        <option value="ZagrCroa_x">Zagrabia Croatica Minor (hrWaC 2.0.10) 121 M</option>
+      </select>
+      <input type="hidden" name="corpus-search-form" value="true">
+      <input type="submit" class="long_process_warning" value="Search" title="Search in corpora">
+    </div>
+  </form>
+
+  <div id="current_corpus">
+    <i class="fa fa-database fa-lg"></i>
+      <a href="http://aranea.juls.savba.sk/guest/run.cgi/corp_info?corpname=AranRusj_x&amp;struct_attr_stats=1&amp;subcorpora=1" target="_blank" title="Information about Araneum Russicum Russicum Minus (Russia-only Russian, 15.03) 120 M">Araneum Russicum Russicum Minus (Russia-only Russian, 15.03) 120 M</a>
+  </div>
+
+  <ul id="toolbar-info">
+    <li><a id="feedback_link" title="Send us feedback"><i class="fa fa-commenting-o fa-lg"></i></a></li>
+    <li><a href="javascript:window.print()" title="Print this page"><i class="fa fa-print fa-lg"></i></a></li>
+    <li>guest</li>
+    <li id="li_system_menu">
+      <a href="http://aranea.juls.savba.sk/guest/run.cgi/freqs?q=aword%2C%5Blemma%3D%22%D0%B8%D0%B7%D1%83%D1%87%D0%B0%D1%82%D1%8C%22%5D+%5Btag%3D%22Nc..a.%2A%22%5D;corpname=AranRusj_x&amp;refs=%3Ddoc.urldomain;fcrit=word/e+0~0%3E0;ml=1#" id="a_open_ske_menu" title="System menu"><i class="fa fa-cog fa-lg"></i></a>
+    </li>
+  </ul>
+
+
+</div>
+
+<div id="ske_menu" style="display: none;">
+  <ul>
+    <li><a href="http://aranea.juls.savba.sk/guest/run.cgi/freqs?q=aword%2C%5Blemma%3D%22%D0%B8%D0%B7%D1%83%D1%87%D0%B0%D1%82%D1%8C%22%5D+%5Btag%3D%22Nc..a.%2A%22%5D;corpname=AranRusj_x&amp;refs=%3Ddoc.urldomain;fcrit=word/e+0~0%3E0;ml=1#" title="Reset user settings and purge cookies" id="a_reset_options">Reset settings</a></li>
+  </ul>
+  <div id="switch_language">
+    <i class="fa fa-language" title="Change interface language"></i>
+    <select name="uilang" onchange="save_uilang(this.options[this.selectedIndex].value);">
+      <option value="en">English</option>
+      <option value="cs">česky</option>
+      <option value="sk">slovensky</option>
+      <option value="zh_CN">简体中文</option>
+      <option value="zh_TW">繁體中文</option>
+      <option value="ga">Gaeilge</option>
+      <option value="sl">slovenščina</option>
+      <option value="hr">hrvatski</option>
+      <option value="ar">العربية</option>
+      <option value="es">español</option>
+      <option value="fr">français</option>
+      <option value="uk_UA">українська</option>
+      <option value="pl_PL">polski</option>
+    </select>
+  </div>
+
+  <div id="social_links">
+    <a href="http://www.facebook.com/SketchEngine" target="_blank"><i class="fa fa-facebook fa-lg"></i></a>
+    <a href="http://www.twitter.com/SketchEngine" target="_blank"><i class="fa fa-twitter fa-lg"></i></a>
+    <a href="http://www.linkedin.com/groups/Sketch-Engine-4293299" target="_blank"><i class="fa fa-linkedin fa-lg"></i></a>
+    <a href="https://plus.google.com/115778706510018224686/posts" target="_blank"><i class="fa fa-google-plus fa-lg"></i></a>
+  </div>
+</div>
+
+
+<div id="container">
+<div id="sidebar">
+<div id="in-sidebar">
+  <ul id="main-menu">
+    <li id="menu_item_home"><a href="http://aranea.juls.savba.sk/guest/index.html">Home</a></li>
+    <li id="menu_item_conc" class="in"><a title="Search this corpus" href="http://aranea.juls.savba.sk/guest/run.cgi/first_form?corpname=AranRusj_x;align=">Search</a></li>
+    <li id="menu_item_wl"><a title="Various methods for creating lists of words, lemmas etc." href="http://aranea.juls.savba.sk/guest/run.cgi/wordlist_form?corpname=AranRusj_x">Word list</a></li>
+
+  <li id="menu_item_corp_info"><a title="Information about Araneum Russicum Russicum Minus (Russia-only Russian, 15.03) 120 M" href="http://aranea.juls.savba.sk/guest/run.cgi/corp_info?corpname=AranRusj_x&amp;struct_attr_stats=1&amp;subcorpora=1">Corpus info</a></li>
+  <li id="menu_item_my_jobs"><a title="My currently running background jobs" href="http://aranea.juls.savba.sk/guest/run.cgi/jobs?corpname=AranRusj_x">My jobs</a></li>
+  <li id="menu_item_user_guide"><a href="https://www.sketchengine.co.uk/user-guide" target="_blank" title="Documentation">User guide</a> <i class="fa fa-external-link"></i></li>
+  </ul>
+  <hr>
+  <div id="submenu">
+  <ul>
+<li><a title="Save frequency list to CSV/XML" href="http://aranea.juls.savba.sk/guest/run.cgi/savefreq_form?q=aword%2C%5Blemma%3D%22%D0%B8%D0%B7%D1%83%D1%87%D0%B0%D1%82%D1%8C%22%5D+%5Btag%3D%22Nc..a.%2A%22%5D;corpname=AranRusj_x&amp;refs=%3Ddoc.urldomain;fcrit=word%2Fe+0%7E0%3E0;flimit=0;freq_sort=;ml=1;fpage=1;ftt_include_empty=;examples=0">Save</a></li>
+  <li><a title="View current concordance" href="http://aranea.juls.savba.sk/guest/run.cgi/view?q=aword%2C%5Blemma%3D%22%D0%B8%D0%B7%D1%83%D1%87%D0%B0%D1%82%D1%8C%22%5D+%5Btag%3D%22Nc..a.%2A%22%5D;corpname=AranRusj_x&amp;refs=%3Ddoc.urldomain">  <i class="fa fa-arrow-circle-left back-conc"></i>concordance</a></li>
+  <li><a title="Make a random sample from the concordance." href="http://aranea.juls.savba.sk/guest/run.cgi/reduce_form?q=aword%2C%5Blemma%3D%22%D0%B8%D0%B7%D1%83%D1%87%D0%B0%D1%82%D1%8C%22%5D+%5Btag%3D%22Nc..a.%2A%22%5D;corpname=AranRusj_x&amp;refs=%3Ddoc.urldomain">Sample</a>
+    <ul class="submenu hidden" id="lastsample">
+      <li><a href="http://aranea.juls.savba.sk/guest/run.cgi/reduce?q=aword%2C%5Blemma%3D%22%D0%B8%D0%B7%D1%83%D1%87%D0%B0%D1%82%D1%8C%22%5D+%5Btag%3D%22Nc..a.%2A%22%5D;corpname=AranRusj_x&amp;refs=%3Ddoc.urldomain;">Last</a></li>
+    </ul>
+    <script type="text/javascript">
+      jQuery(document).ready(function () {
+        if (jQuery.cookies.get('last_sample_size')) {
+          var rlines = jQuery.cookies.get('last_sample_size');
+          var _href = jQuery('#lastsample a').attr('href');
+          jQuery('#lastsample').removeClass('hidden');
+          jQuery('#lastsample a').attr("href", _href + 'rlines=' + rlines);
+          jQuery('#lastsample a').append(' (' + rlines + ')');
+        }
+      });
+    </script>
+  </li>
+  <li><a title="Make a query on the current concordance." href="http://aranea.juls.savba.sk/guest/run.cgi/filter_form?q=aword%2C%5Blemma%3D%22%D0%B8%D0%B7%D1%83%D1%87%D0%B0%D1%82%D1%8C%22%5D+%5Btag%3D%22Nc..a.%2A%22%5D;corpname=AranRusj_x&amp;refs=%3Ddoc.urldomain">Filter</a>
+    <ul class="submenu">
+      <li><a title="Filter lines with subpart matches" href="http://aranea.juls.savba.sk/guest/run.cgi/view?corpname=AranRusj_x&amp;refs=%3Ddoc.urldomain;q=aword%2C%5Blemma%3D%22%D0%B8%D0%B7%D1%83%D1%87%D0%B0%D1%82%D1%8C%22%5D+%5Btag%3D%22Nc..a.%2A%22%5D;q=D">Sub-hits</a></li>
+      <li><a title="Filter all but first hit in document" href="http://aranea.juls.savba.sk/guest/run.cgi/view?corpname=AranRusj_x&amp;refs=%3Ddoc.urldomain;q=aword%2C%5Blemma%3D%22%D0%B8%D0%B7%D1%83%D1%87%D0%B0%D1%82%D1%8C%22%5D+%5Btag%3D%22Nc..a.%2A%22%5D;q=Fdoc">1st hit in doc</a></li>
+    </ul>
+  </li>
+  <li><a title="Compute frequencies" href="http://aranea.juls.savba.sk/guest/run.cgi/freq?q=aword%2C%5Blemma%3D%22%D0%B8%D0%B7%D1%83%D1%87%D0%B0%D1%82%D1%8C%22%5D+%5Btag%3D%22Nc..a.%2A%22%5D;corpname=AranRusj_x&amp;refs=%3Ddoc.urldomain">Frequency</a>
+    <ul class="submenu">
+      <li><a title="Show frequencies of node tags" href="http://aranea.juls.savba.sk/guest/run.cgi/freqs?q=aword%2C%5Blemma%3D%22%D0%B8%D0%B7%D1%83%D1%87%D0%B0%D1%82%D1%8C%22%5D+%5Btag%3D%22Nc..a.%2A%22%5D;corpname=AranRusj_x&amp;refs=%3Ddoc.urldomain;fcrit=tag/e+0~0%3E0;ml=1">Node tags</a></li>
+      <li><a title="Show frequencies of node forms" href="http://aranea.juls.savba.sk/guest/run.cgi/freqs?q=aword%2C%5Blemma%3D%22%D0%B8%D0%B7%D1%83%D1%87%D0%B0%D1%82%D1%8C%22%5D+%5Btag%3D%22Nc..a.%2A%22%5D;corpname=AranRusj_x&amp;refs=%3Ddoc.urldomain;fcrit=word/e+0~0%3E0;ml=1">Node forms</a></li>
+        <li><a title="Show frequencies of document IDs" href="http://aranea.juls.savba.sk/guest/run.cgi/freqs?q=aword%2C%5Blemma%3D%22%D0%B8%D0%B7%D1%83%D1%87%D0%B0%D1%82%D1%8C%22%5D+%5Btag%3D%22Nc..a.%2A%22%5D;corpname=AranRusj_x&amp;refs=%3Ddoc.urldomain;fcrit=doc.urldomain+0;ml=1">Doc IDs</a></li>
+    </ul>
+  </li>
+  <li><a title="Collocation candidates" href="http://aranea.juls.savba.sk/guest/run.cgi/coll?q=aword%2C%5Blemma%3D%22%D0%B8%D0%B7%D1%83%D1%87%D0%B0%D1%82%D1%8C%22%5D+%5Btag%3D%22Nc..a.%2A%22%5D;corpname=AranRusj_x&amp;refs=%3Ddoc.urldomain">Collocations</a></li>
+  <li><a title="Concordance distribution overview" href="http://aranea.juls.savba.sk/guest/run.cgi/freq_distrib?q=aword%2C%5Blemma%3D%22%D0%B8%D0%B7%D1%83%D1%87%D0%B0%D1%82%D1%8C%22%5D+%5Btag%3D%22Nc..a.%2A%22%5D;corpname=AranRusj_x&amp;refs=%3Ddoc.urldomain">Visualize</a></li>
+  <li>
+  <a href="https://www.sketchengine.eu/documentation/quick-start-guide/concordance-lesson-6/" rel="help" title="? Help on concordance" target="_blank">
+    <i class="fa fa-question-circle"></i>
+  </a>
+  </li>
+
+  </ul>
+  </div>
+  <a class="menu_switch">Menu position</a>
+</div> <!-- in-sidebar -->
+</div> <!-- sidebar -->
+
+<div id="content">
+
+
+
+
+
+<div id="long_process_warning">
+  <div>
+    <span>This action may take several minutes for large corpora, please wait.</span>
+  </div>
+</div>
+
+
+<h3>Frequency list</h3>
+<form action="http://aranea.juls.savba.sk/guest/run.cgi/freqs">
+
+  <input type="hidden" name="q" value="aword,[lemma=&quot;изучать&quot;] [tag=&quot;Nc..a.*&quot;]">
+  <input type="hidden" name="corpname" value="AranRusj_x">
+  <input type="hidden" name="refs" value="=doc.urldomain">
+
+        <input type="hidden" name="fcrit" value="word/e 0~0&gt;0">
+        <input type="hidden" name="ml" value="1">
+        <input type="hidden" name="fpage" value="1">
+        <input type="hidden" name="ftt_include_empty" value="">
+        <input type="hidden" name="wlpat" value="">
+        <input type="hidden" name="wlattr" value="">
+        <input type="hidden" name="examples" value="0">
+  Frequency limit:
+  <input type="text" name="flimit" value="0" size="7" class="check_input pos_integer_zero" data-errtext="Must be a positive integer or zero">
+  <input type="submit" value="Set limit">
+</form>
+
+
+<div class="bonito-pagination">
+<form action="http://aranea.juls.savba.sk/guest/run.cgi/freqs">
+
+<div class="bonito-pagination-core">
+  
+  <input type="hidden" name="q" value="aword,[lemma=&quot;изучать&quot;] [tag=&quot;Nc..a.*&quot;]">
+  <input type="hidden" name="corpname" value="AranRusj_x">
+  <input type="hidden" name="refs" value="=doc.urldomain">
+
+    <input type="hidden" name="wlpat" value="">
+    <input type="hidden" name="wlattr" value="">
+    <input type="hidden" name="fcrit" value="word/e 0~0&gt;0">
+    <input type="hidden" name="flimit" value="0">
+    <input type="hidden" name="freq_sort" value="">
+    <input type="hidden" name="ml" value="1">
+    <input type="hidden" name="examples" value="0">
+
+    Page
+    <input type="text" name="fpage" value="1" size="4" class="check_input pos_integer" data-errtext="Page must be a positive integer" )"="">
+    <input type="submit" value="Go"> 
+</div>
+  
+  <div class="bonito-pagination-right">
+    <a href="http://aranea.juls.savba.sk/guest/run.cgi/freqs?q=aword%2C%5Blemma%3D%22%D0%B8%D0%B7%D1%83%D1%87%D0%B0%D1%82%D1%8C%22%5D+%5Btag%3D%22Nc..a.%2A%22%5D;corpname=AranRusj_x&amp;refs=%3Ddoc.urldomain;fcrit=word%2Fe+0%7E0%3E0;flimit=0;freq_sort=;ml=1;fpage=1;ftt_include_empty=;examples=0;fpage=2" id="next">Next &gt;</a>
+  </div>
+</form>
+</div>
+
+<table class="result">
+<thead>
+  <tr>
+  <th></th>
+    <th>
+      <a href="http://aranea.juls.savba.sk/guest/run.cgi/freqs?q=aword%2C%5Blemma%3D%22%D0%B8%D0%B7%D1%83%D1%87%D0%B0%D1%82%D1%8C%22%5D+%5Btag%3D%22Nc..a.%2A%22%5D;corpname=AranRusj_x&amp;refs=%3Ddoc.urldomain;fcrit=word%2Fe+0%7E0%3E0;flimit=0;freq_sort=0;ml=1;fpage=1;ftt_include_empty=;examples=0">word</a>
+    </th>
+    <th>
+      <a href="http://aranea.juls.savba.sk/guest/run.cgi/freqs?q=aword%2C%5Blemma%3D%22%D0%B8%D0%B7%D1%83%D1%87%D0%B0%D1%82%D1%8C%22%5D+%5Btag%3D%22Nc..a.%2A%22%5D;corpname=AranRusj_x&amp;refs=%3Ddoc.urldomain;fcrit=word%2Fe+0%7E0%3E0;flimit=0;freq_sort=freq;ml=1;fpage=1;ftt_include_empty=;examples=0">Frequency</a>
+    </th>
+  <th>
+    Items: <b class="add_commas">1,106</b> ||
+    Total frequency: <b class="add_commas">1,723</b>
+  </th>
+  </tr>
+</thead>
+
+<tbody>
+    <tr>
+    <td>
+<a href="http://aranea.juls.savba.sk/guest/run.cgi/view?q=aword%2C%5Blemma%3D%22%D0%B8%D0%B7%D1%83%D1%87%D0%B0%D1%82%D1%8C%22%5D+%5Btag%3D%22Nc..a.%2A%22%5D;q=p0+0%3E0+0+%5Bword%3D%22%D0%B8%D0%B7%D1%83%D1%87%D0%B0%D1%82%D1%8C%22%5D%5Bword%3D%22%D1%8F%D0%B7%D1%8B%D0%BA%22%5D;corpname=AranRusj_x&amp;refs=%3Ddoc.urldomain">P</a>&nbsp;|&nbsp;<a href="http://aranea.juls.savba.sk/guest/run.cgi/view?q=aword%2C%5Blemma%3D%22%D0%B8%D0%B7%D1%83%D1%87%D0%B0%D1%82%D1%8C%22%5D+%5Btag%3D%22Nc..a.%2A%22%5D;q=n0+0%3E0+0+%5Bword%3D%22%D0%B8%D0%B7%D1%83%D1%87%D0%B0%D1%82%D1%8C%22%5D%5Bword%3D%22%D1%8F%D0%B7%D1%8B%D0%BA%22%5D;corpname=AranRusj_x&amp;refs=%3Ddoc.urldomain">N</a>
+    </td>
+      <td>изучать  язык</td>
+    <td align="right" class="add_commas">25</td>
+      <td>
+        <div class="bar" style="height:10px;width:301px;"></div>
+        <img src="./Frequency list(1)_files/red.png" class="hidden" height="10" width="301" alt="301">
+      </td>
+    </tr>
+    <tr>
+    <td>
+<a href="http://aranea.juls.savba.sk/guest/run.cgi/view?q=aword%2C%5Blemma%3D%22%D0%B8%D0%B7%D1%83%D1%87%D0%B0%D1%82%D1%8C%22%5D+%5Btag%3D%22Nc..a.%2A%22%5D;q=p0+0%3E0+0+%5Bword%3D%22%D0%B8%D0%B7%D1%83%D1%87%D0%B0%D1%82%D1%8C%22%5D%5Bword%3D%22%D0%B8%D1%81%D1%82%D0%BE%D1%80%D0%B8%D1%8E%22%5D;corpname=AranRusj_x&amp;refs=%3Ddoc.urldomain">P</a>&nbsp;|&nbsp;<a href="http://aranea.juls.savba.sk/guest/run.cgi/view?q=aword%2C%5Blemma%3D%22%D0%B8%D0%B7%D1%83%D1%87%D0%B0%D1%82%D1%8C%22%5D+%5Btag%3D%22Nc..a.%2A%22%5D;q=n0+0%3E0+0+%5Bword%3D%22%D0%B8%D0%B7%D1%83%D1%87%D0%B0%D1%82%D1%8C%22%5D%5Bword%3D%22%D0%B8%D1%81%D1%82%D0%BE%D1%80%D0%B8%D1%8E%22%5D;corpname=AranRusj_x&amp;refs=%3Ddoc.urldomain">N</a>
+    </td>
+      <td>изучать  историю</td>
+    <td align="right" class="add_commas">22</td>
+      <td>
+        <div class="bar" style="height:10px;width:265px;"></div>
+        <img src="./Frequency list(1)_files/red.png" class="hidden" height="10" width="265" alt="265">
+      </td>
+    </tr>
+    <tr>
+    <td>
+<a href="http://aranea.juls.savba.sk/guest/run.cgi/view?q=aword%2C%5Blemma%3D%22%D0%B8%D0%B7%D1%83%D1%87%D0%B0%D1%82%D1%8C%22%5D+%5Btag%3D%22Nc..a.%2A%22%5D;q=p0+0%3E0+0+%5Bword%3D%22%D0%B8%D0%B7%D1%83%D1%87%D0%B0%D1%8E%D1%82%22%5D%5Bword%3D%22%D0%B2%D0%BE%D0%B7%D0%BC%D0%BE%D0%B6%D0%BD%D0%BE%D1%81%D1%82%D1%8C%22%5D;corpname=AranRusj_x&amp;refs=%3Ddoc.urldomain">P</a>&nbsp;|&nbsp;<a href="http://aranea.juls.savba.sk/guest/run.cgi/view?q=aword%2C%5Blemma%3D%22%D0%B8%D0%B7%D1%83%D1%87%D0%B0%D1%82%D1%8C%22%5D+%5Btag%3D%22Nc..a.%2A%22%5D;q=n0+0%3E0+0+%5Bword%3D%22%D0%B8%D0%B7%D1%83%D1%87%D0%B0%D1%8E%D1%82%22%5D%5Bword%3D%22%D0%B2%D0%BE%D0%B7%D0%BC%D0%BE%D0%B6%D0%BD%D0%BE%D1%81%D1%82%D1%8C%22%5D;corpname=AranRusj_x&amp;refs=%3Ddoc.urldomain">N</a>
+    </td>
+      <td>изучают  возможность</td>
+    <td align="right" class="add_commas">13</td>
+      <td>
+        <div class="bar" style="height:10px;width:157px;"></div>
+        <img src="./Frequency list(1)_files/red.png" class="hidden" height="10" width="157" alt="157">
+      </td>
+    </tr>
+    <tr>
+    <td>
+<a href="http://aranea.juls.savba.sk/guest/run.cgi/view?q=aword%2C%5Blemma%3D%22%D0%B8%D0%B7%D1%83%D1%87%D0%B0%D1%82%D1%8C%22%5D+%5Btag%3D%22Nc..a.%2A%22%5D;q=p0+0%3E0+0+%5Bword%3D%22%D0%B8%D0%B7%D1%83%D1%87%D0%B0%D1%82%D1%8C%22%5D%5Bword%3D%22%D0%B8%D0%BD%D1%84%D0%BE%D1%80%D0%BC%D0%B0%D1%86%D0%B8%D1%8E%22%5D;corpname=AranRusj_x&amp;refs=%3Ddoc.urldomain">P</a>&nbsp;|&nbsp;<a href="http://aranea.juls.savba.sk/guest/run.cgi/view?q=aword%2C%5Blemma%3D%22%D0%B8%D0%B7%D1%83%D1%87%D0%B0%D1%82%D1%8C%22%5D+%5Btag%3D%22Nc..a.%2A%22%5D;q=n0+0%3E0+0+%5Bword%3D%22%D0%B8%D0%B7%D1%83%D1%87%D0%B0%D1%82%D1%8C%22%5D%5Bword%3D%22%D0%B8%D0%BD%D1%84%D0%BE%D1%80%D0%BC%D0%B0%D1%86%D0%B8%D1%8E%22%5D;corpname=AranRusj_x&amp;refs=%3Ddoc.urldomain">N</a>
+    </td>
+      <td>изучать  информацию</td>
+    <td align="right" class="add_commas">13</td>
+      <td>
+        <div class="bar" style="height:10px;width:157px;"></div>
+        <img src="./Frequency list(1)_files/red.png" class="hidden" height="10" width="157" alt="157">
+      </td>
+    </tr>
+    <tr>
+    <td>
+<a href="http://aranea.juls.savba.sk/guest/run.cgi/view?q=aword%2C%5Blemma%3D%22%D0%B8%D0%B7%D1%83%D1%87%D0%B0%D1%82%D1%8C%22%5D+%5Btag%3D%22Nc..a.%2A%22%5D;q=p0+0%3E0+0+%5Bword%3D%22%D0%B8%D0%B7%D1%83%D1%87%D0%B0%D1%82%D1%8C%22%5D%5Bword%3D%22%D1%8F%D0%B7%D1%8B%D0%BA%D0%B8%22%5D;corpname=AranRusj_x&amp;refs=%3Ddoc.urldomain">P</a>&nbsp;|&nbsp;<a href="http://aranea.juls.savba.sk/guest/run.cgi/view?q=aword%2C%5Blemma%3D%22%D0%B8%D0%B7%D1%83%D1%87%D0%B0%D1%82%D1%8C%22%5D+%5Btag%3D%22Nc..a.%2A%22%5D;q=n0+0%3E0+0+%5Bword%3D%22%D0%B8%D0%B7%D1%83%D1%87%D0%B0%D1%82%D1%8C%22%5D%5Bword%3D%22%D1%8F%D0%B7%D1%8B%D0%BA%D0%B8%22%5D;corpname=AranRusj_x&amp;refs=%3Ddoc.urldomain">N</a>
+    </td>
+      <td>изучать  языки</td>
+    <td align="right" class="add_commas">11</td>
+      <td>
+        <div class="bar" style="height:10px;width:133px;"></div>
+        <img src="./Frequency list(1)_files/red.png" class="hidden" height="10" width="133" alt="133">
+      </td>
+    </tr>
+    <tr>
+    <td>
+<a href="http://aranea.juls.savba.sk/guest/run.cgi/view?q=aword%2C%5Blemma%3D%22%D0%B8%D0%B7%D1%83%D1%87%D0%B0%D1%82%D1%8C%22%5D+%5Btag%3D%22Nc..a.%2A%22%5D;q=p0+0%3E0+0+%5Bword%3D%22%D0%B8%D0%B7%D1%83%D1%87%D0%B0%D1%82%D1%8C%22%5D%5Bword%3D%22%D1%80%D1%8B%D0%BD%D0%BE%D0%BA%22%5D;corpname=AranRusj_x&amp;refs=%3Ddoc.urldomain">P</a>&nbsp;|&nbsp;<a href="http://aranea.juls.savba.sk/guest/run.cgi/view?q=aword%2C%5Blemma%3D%22%D0%B8%D0%B7%D1%83%D1%87%D0%B0%D1%82%D1%8C%22%5D+%5Btag%3D%22Nc..a.%2A%22%5D;q=n0+0%3E0+0+%5Bword%3D%22%D0%B8%D0%B7%D1%83%D1%87%D0%B0%D1%82%D1%8C%22%5D%5Bword%3D%22%D1%80%D1%8B%D0%BD%D0%BE%D0%BA%22%5D;corpname=AranRusj_x&amp;refs=%3Ddoc.urldomain">N</a>
+    </td>
+      <td>изучать  рынок</td>
+    <td align="right" class="add_commas">11</td>
+      <td>
+        <div class="bar" style="height:10px;width:133px;"></div>
+        <img src="./Frequency list(1)_files/red.png" class="hidden" height="10" width="133" alt="133">
+      </td>
+    </tr>
+    <tr>
+    <td>
+<a href="http://aranea.juls.savba.sk/guest/run.cgi/view?q=aword%2C%5Blemma%3D%22%D0%B8%D0%B7%D1%83%D1%87%D0%B0%D1%82%D1%8C%22%5D+%5Btag%3D%22Nc..a.%2A%22%5D;q=p0+0%3E0+0+%5Bword%3D%22%D0%B8%D0%B7%D1%83%D1%87%D0%B0%D1%82%D1%8C%22%5D%5Bword%3D%22%D0%BC%D0%B8%D1%80%22%5D;corpname=AranRusj_x&amp;refs=%3Ddoc.urldomain">P</a>&nbsp;|&nbsp;<a href="http://aranea.juls.savba.sk/guest/run.cgi/view?q=aword%2C%5Blemma%3D%22%D0%B8%D0%B7%D1%83%D1%87%D0%B0%D1%82%D1%8C%22%5D+%5Btag%3D%22Nc..a.%2A%22%5D;q=n0+0%3E0+0+%5Bword%3D%22%D0%B8%D0%B7%D1%83%D1%87%D0%B0%D1%82%D1%8C%22%5D%5Bword%3D%22%D0%BC%D0%B8%D1%80%22%5D;corpname=AranRusj_x&amp;refs=%3Ddoc.urldomain">N</a>
+    </td>
+      <td>изучать  мир</td>
+    <td align="right" class="add_commas">11</td>
+      <td>
+        <div class="bar" style="height:10px;width:133px;"></div>
+        <img src="./Frequency list(1)_files/red.png" class="hidden" height="10" width="133" alt="133">
+      </td>
+    </tr>
+    <tr>
+    <td>
+<a href="http://aranea.juls.savba.sk/guest/run.cgi/view?q=aword%2C%5Blemma%3D%22%D0%B8%D0%B7%D1%83%D1%87%D0%B0%D1%82%D1%8C%22%5D+%5Btag%3D%22Nc..a.%2A%22%5D;q=p0+0%3E0+0+%5Bword%3D%22%D0%B8%D0%B7%D1%83%D1%87%D0%B0%D0%B5%D1%82%22%5D%5Bword%3D%22%D0%B2%D0%BE%D0%B7%D0%BC%D0%BE%D0%B6%D0%BD%D0%BE%D1%81%D1%82%D1%8C%22%5D;corpname=AranRusj_x&amp;refs=%3Ddoc.urldomain">P</a>&nbsp;|&nbsp;<a href="http://aranea.juls.savba.sk/guest/run.cgi/view?q=aword%2C%5Blemma%3D%22%D0%B8%D0%B7%D1%83%D1%87%D0%B0%D1%82%D1%8C%22%5D+%5Btag%3D%22Nc..a.%2A%22%5D;q=n0+0%3E0+0+%5Bword%3D%22%D0%B8%D0%B7%D1%83%D1%87%D0%B0%D0%B5%D1%82%22%5D%5Bword%3D%22%D0%B2%D0%BE%D0%B7%D0%BC%D0%BE%D0%B6%D0%BD%D0%BE%D1%81%D1%82%D1%8C%22%5D;corpname=AranRusj_x&amp;refs=%3Ddoc.urldomain">N</a>
+    </td>
+      <td>изучает  возможность</td>
+    <td align="right" class="add_commas">11</td>
+      <td>
+        <div class="bar" style="height:10px;width:133px;"></div>
+        <img src="./Frequency list(1)_files/red.png" class="hidden" height="10" width="133" alt="133">
+      </td>
+    </tr>
+    <tr>
+    <td>
+<a href="http://aranea.juls.savba.sk/guest/run.cgi/view?q=aword%2C%5Blemma%3D%22%D0%B8%D0%B7%D1%83%D1%87%D0%B0%D1%82%D1%8C%22%5D+%5Btag%3D%22Nc..a.%2A%22%5D;q=p0+0%3E0+0+%5Bword%3D%22%D0%B8%D0%B7%D1%83%D1%87%D0%B0%D0%B5%D1%82%22%5D%5Bword%3D%22%D0%B7%D0%B0%D0%BA%D0%BE%D0%BD%D0%BE%D0%BC%D0%B5%D1%80%D0%BD%D0%BE%D1%81%D1%82%D0%B8%22%5D;corpname=AranRusj_x&amp;refs=%3Ddoc.urldomain">P</a>&nbsp;|&nbsp;<a href="http://aranea.juls.savba.sk/guest/run.cgi/view?q=aword%2C%5Blemma%3D%22%D0%B8%D0%B7%D1%83%D1%87%D0%B0%D1%82%D1%8C%22%5D+%5Btag%3D%22Nc..a.%2A%22%5D;q=n0+0%3E0+0+%5Bword%3D%22%D0%B8%D0%B7%D1%83%D1%87%D0%B0%D0%B5%D1%82%22%5D%5Bword%3D%22%D0%B7%D0%B0%D0%BA%D0%BE%D0%BD%D0%BE%D0%BC%D0%B5%D1%80%D0%BD%D0%BE%D1%81%D1%82%D0%B8%22%5D;corpname=AranRusj_x&amp;refs=%3Ddoc.urldomain">N</a>
+    </td>
+      <td>изучает  закономерности</td>
+    <td align="right" class="add_commas">10</td>
+      <td>
+        <div class="bar" style="height:10px;width:121px;"></div>
+        <img src="./Frequency list(1)_files/red.png" class="hidden" height="10" width="121" alt="121">
+      </td>
+    </tr>
+    <tr>
+    <td>
+<a href="http://aranea.juls.savba.sk/guest/run.cgi/view?q=aword%2C%5Blemma%3D%22%D0%B8%D0%B7%D1%83%D1%87%D0%B0%D1%82%D1%8C%22%5D+%5Btag%3D%22Nc..a.%2A%22%5D;q=p0+0%3E0+0+%5Bword%3D%22%D0%B8%D0%B7%D1%83%D1%87%D0%B0%D1%82%D1%8C%22%5D%5Bword%3D%22%D0%BC%D0%B0%D1%82%D0%B5%D1%80%D0%B8%D0%B0%D0%BB%D1%8B%22%5D;corpname=AranRusj_x&amp;refs=%3Ddoc.urldomain">P</a>&nbsp;|&nbsp;<a href="http://aranea.juls.savba.sk/guest/run.cgi/view?q=aword%2C%5Blemma%3D%22%D0%B8%D0%B7%D1%83%D1%87%D0%B0%D1%82%D1%8C%22%5D+%5Btag%3D%22Nc..a.%2A%22%5D;q=n0+0%3E0+0+%5Bword%3D%22%D0%B8%D0%B7%D1%83%D1%87%D0%B0%D1%82%D1%8C%22%5D%5Bword%3D%22%D0%BC%D0%B0%D1%82%D0%B5%D1%80%D0%B8%D0%B0%D0%BB%D1%8B%22%5D;corpname=AranRusj_x&amp;refs=%3Ddoc.urldomain">N</a>
+    </td>
+      <td>изучать  материалы</td>
+    <td align="right" class="add_commas">9</td>
+      <td>
+        <div class="bar" style="height:10px;width:109px;"></div>
+        <img src="./Frequency list(1)_files/red.png" class="hidden" height="10" width="109" alt="109">
+      </td>
+    </tr>
+    <tr>
+    <td>
+<a href="http://aranea.juls.savba.sk/guest/run.cgi/view?q=aword%2C%5Blemma%3D%22%D0%B8%D0%B7%D1%83%D1%87%D0%B0%D1%82%D1%8C%22%5D+%5Btag%3D%22Nc..a.%2A%22%5D;q=p0+0%3E0+0+%5Bword%3D%22%D0%B8%D0%B7%D1%83%D1%87%D0%B0%D1%82%D1%8C%22%5D%5Bword%3D%22%D0%BB%D0%B8%D1%82%D0%B5%D1%80%D0%B0%D1%82%D1%83%D1%80%D1%83%22%5D;corpname=AranRusj_x&amp;refs=%3Ddoc.urldomain">P</a>&nbsp;|&nbsp;<a href="http://aranea.juls.savba.sk/guest/run.cgi/view?q=aword%2C%5Blemma%3D%22%D0%B8%D0%B7%D1%83%D1%87%D0%B0%D1%82%D1%8C%22%5D+%5Btag%3D%22Nc..a.%2A%22%5D;q=n0+0%3E0+0+%5Bword%3D%22%D0%B8%D0%B7%D1%83%D1%87%D0%B0%D1%82%D1%8C%22%5D%5Bword%3D%22%D0%BB%D0%B8%D1%82%D0%B5%D1%80%D0%B0%D1%82%D1%83%D1%80%D1%83%22%5D;corpname=AranRusj_x&amp;refs=%3Ddoc.urldomain">N</a>
+    </td>
+      <td>изучать  литературу</td>
+    <td align="right" class="add_commas">9</td>
+      <td>
+        <div class="bar" style="height:10px;width:109px;"></div>
+        <img src="./Frequency list(1)_files/red.png" class="hidden" height="10" width="109" alt="109">
+      </td>
+    </tr>
+    <tr>
+    <td>
+<a href="http://aranea.juls.savba.sk/guest/run.cgi/view?q=aword%2C%5Blemma%3D%22%D0%B8%D0%B7%D1%83%D1%87%D0%B0%D1%82%D1%8C%22%5D+%5Btag%3D%22Nc..a.%2A%22%5D;q=p0+0%3E0+0+%5Bword%3D%22%D0%B8%D0%B7%D1%83%D1%87%D0%B0%D0%BB%22%5D%5Bword%3D%22%D0%B8%D1%81%D1%82%D0%BE%D1%80%D0%B8%D1%8E%22%5D;corpname=AranRusj_x&amp;refs=%3Ddoc.urldomain">P</a>&nbsp;|&nbsp;<a href="http://aranea.juls.savba.sk/guest/run.cgi/view?q=aword%2C%5Blemma%3D%22%D0%B8%D0%B7%D1%83%D1%87%D0%B0%D1%82%D1%8C%22%5D+%5Btag%3D%22Nc..a.%2A%22%5D;q=n0+0%3E0+0+%5Bword%3D%22%D0%B8%D0%B7%D1%83%D1%87%D0%B0%D0%BB%22%5D%5Bword%3D%22%D0%B8%D1%81%D1%82%D0%BE%D1%80%D0%B8%D1%8E%22%5D;corpname=AranRusj_x&amp;refs=%3Ddoc.urldomain">N</a>
+    </td>
+      <td>изучал  историю</td>
+    <td align="right" class="add_commas">9</td>
+      <td>
+        <div class="bar" style="height:10px;width:109px;"></div>
+        <img src="./Frequency list(1)_files/red.png" class="hidden" height="10" width="109" alt="109">
+      </td>
+    </tr>
+    <tr>
+    <td>
+<a href="http://aranea.juls.savba.sk/guest/run.cgi/view?q=aword%2C%5Blemma%3D%22%D0%B8%D0%B7%D1%83%D1%87%D0%B0%D1%82%D1%8C%22%5D+%5Btag%3D%22Nc..a.%2A%22%5D;q=p0+0%3E0+0+%5Bword%3D%22%D0%B8%D0%B7%D1%83%D1%87%D0%B0%D0%B5%D0%BC%D1%8B%D0%B9%22%5D%5Bword%3D%22%D0%BF%D0%B5%D1%80%D0%B8%D0%BE%D0%B4%22%5D;corpname=AranRusj_x&amp;refs=%3Ddoc.urldomain">P</a>&nbsp;|&nbsp;<a href="http://aranea.juls.savba.sk/guest/run.cgi/view?q=aword%2C%5Blemma%3D%22%D0%B8%D0%B7%D1%83%D1%87%D0%B0%D1%82%D1%8C%22%5D+%5Btag%3D%22Nc..a.%2A%22%5D;q=n0+0%3E0+0+%5Bword%3D%22%D0%B8%D0%B7%D1%83%D1%87%D0%B0%D0%B5%D0%BC%D1%8B%D0%B9%22%5D%5Bword%3D%22%D0%BF%D0%B5%D1%80%D0%B8%D0%BE%D0%B4%22%5D;corpname=AranRusj_x&amp;refs=%3Ddoc.urldomain">N</a>
+    </td>
+      <td>изучаемый  период</td>
+    <td align="right" class="add_commas">9</td>
+      <td>
+        <div class="bar" style="height:10px;width:109px;"></div>
+        <img src="./Frequency list(1)_files/red.png" class="hidden" height="10" width="109" alt="109">
+      </td>
+    </tr>
+    <tr>
+    <td>
+<a href="http://aranea.juls.savba.sk/guest/run.cgi/view?q=aword%2C%5Blemma%3D%22%D0%B8%D0%B7%D1%83%D1%87%D0%B0%D1%82%D1%8C%22%5D+%5Btag%3D%22Nc..a.%2A%22%5D;q=p0+0%3E0+0+%5Bword%3D%22%D0%B8%D0%B7%D1%83%D1%87%D0%B0%D0%B5%D0%BC%D1%8B%D0%B9%22%5D%5Bword%3D%22%D0%BC%D0%B0%D1%82%D0%B5%D1%80%D0%B8%D0%B0%D0%BB%22%5D;corpname=AranRusj_x&amp;refs=%3Ddoc.urldomain">P</a>&nbsp;|&nbsp;<a href="http://aranea.juls.savba.sk/guest/run.cgi/view?q=aword%2C%5Blemma%3D%22%D0%B8%D0%B7%D1%83%D1%87%D0%B0%D1%82%D1%8C%22%5D+%5Btag%3D%22Nc..a.%2A%22%5D;q=n0+0%3E0+0+%5Bword%3D%22%D0%B8%D0%B7%D1%83%D1%87%D0%B0%D0%B5%D0%BC%D1%8B%D0%B9%22%5D%5Bword%3D%22%D0%BC%D0%B0%D1%82%D0%B5%D1%80%D0%B8%D0%B0%D0%BB%22%5D;corpname=AranRusj_x&amp;refs=%3Ddoc.urldomain">N</a>
+    </td>
+      <td>изучаемый  материал</td>
+    <td align="right" class="add_commas">9</td>
+      <td>
+        <div class="bar" style="height:10px;width:109px;"></div>
+        <img src="./Frequency list(1)_files/red.png" class="hidden" height="10" width="109" alt="109">
+      </td>
+    </tr>
+    <tr>
+    <td>
+<a href="http://aranea.juls.savba.sk/guest/run.cgi/view?q=aword%2C%5Blemma%3D%22%D0%B8%D0%B7%D1%83%D1%87%D0%B0%D1%82%D1%8C%22%5D+%5Btag%3D%22Nc..a.%2A%22%5D;q=p0+0%3E0+0+%5Bword%3D%22%D0%B8%D0%B7%D1%83%D1%87%D0%B0%D1%8E%D1%82%22%5D%5Bword%3D%22%D0%BE%D1%81%D0%BE%D0%B1%D0%B5%D0%BD%D0%BD%D0%BE%D1%81%D1%82%D0%B8%22%5D;corpname=AranRusj_x&amp;refs=%3Ddoc.urldomain">P</a>&nbsp;|&nbsp;<a href="http://aranea.juls.savba.sk/guest/run.cgi/view?q=aword%2C%5Blemma%3D%22%D0%B8%D0%B7%D1%83%D1%87%D0%B0%D1%82%D1%8C%22%5D+%5Btag%3D%22Nc..a.%2A%22%5D;q=n0+0%3E0+0+%5Bword%3D%22%D0%B8%D0%B7%D1%83%D1%87%D0%B0%D1%8E%D1%82%22%5D%5Bword%3D%22%D0%BE%D1%81%D0%BE%D0%B1%D0%B5%D0%BD%D0%BD%D0%BE%D1%81%D1%82%D0%B8%22%5D;corpname=AranRusj_x&amp;refs=%3Ddoc.urldomain">N</a>
+    </td>
+      <td>изучают  особенности</td>
+    <td align="right" class="add_commas">8</td>
+      <td>
+        <div class="bar" style="height:10px;width:97px;"></div>
+        <img src="./Frequency list(1)_files/red.png" class="hidden" height="10" width="97" alt="97">
+      </td>
+    </tr>
+    <tr>
+    <td>
+<a href="http://aranea.juls.savba.sk/guest/run.cgi/view?q=aword%2C%5Blemma%3D%22%D0%B8%D0%B7%D1%83%D1%87%D0%B0%D1%82%D1%8C%22%5D+%5Btag%3D%22Nc..a.%2A%22%5D;q=p0+0%3E0+0+%5Bword%3D%22%D0%B8%D0%B7%D1%83%D1%87%D0%B0%D1%82%D1%8C%22%5D%5Bword%3D%22%D1%82%D0%B5%D0%BC%D1%83%22%5D;corpname=AranRusj_x&amp;refs=%3Ddoc.urldomain">P</a>&nbsp;|&nbsp;<a href="http://aranea.juls.savba.sk/guest/run.cgi/view?q=aword%2C%5Blemma%3D%22%D0%B8%D0%B7%D1%83%D1%87%D0%B0%D1%82%D1%8C%22%5D+%5Btag%3D%22Nc..a.%2A%22%5D;q=n0+0%3E0+0+%5Bword%3D%22%D0%B8%D0%B7%D1%83%D1%87%D0%B0%D1%82%D1%8C%22%5D%5Bword%3D%22%D1%82%D0%B5%D0%BC%D1%83%22%5D;corpname=AranRusj_x&amp;refs=%3Ddoc.urldomain">N</a>
+    </td>
+      <td>изучать  тему</td>
+    <td align="right" class="add_commas">8</td>
+      <td>
+        <div class="bar" style="height:10px;width:97px;"></div>
+        <img src="./Frequency list(1)_files/red.png" class="hidden" height="10" width="97" alt="97">
+      </td>
+    </tr>
+    <tr>
+    <td>
+<a href="http://aranea.juls.savba.sk/guest/run.cgi/view?q=aword%2C%5Blemma%3D%22%D0%B8%D0%B7%D1%83%D1%87%D0%B0%D1%82%D1%8C%22%5D+%5Btag%3D%22Nc..a.%2A%22%5D;q=p0+0%3E0+0+%5Bword%3D%22%D0%B8%D0%B7%D1%83%D1%87%D0%B0%D1%82%D1%8C%22%5D%5Bword%3D%22%D0%B2%D0%BE%D0%BF%D1%80%D0%BE%D1%81%22%5D;corpname=AranRusj_x&amp;refs=%3Ddoc.urldomain">P</a>&nbsp;|&nbsp;<a href="http://aranea.juls.savba.sk/guest/run.cgi/view?q=aword%2C%5Blemma%3D%22%D0%B8%D0%B7%D1%83%D1%87%D0%B0%D1%82%D1%8C%22%5D+%5Btag%3D%22Nc..a.%2A%22%5D;q=n0+0%3E0+0+%5Bword%3D%22%D0%B8%D0%B7%D1%83%D1%87%D0%B0%D1%82%D1%8C%22%5D%5Bword%3D%22%D0%B2%D0%BE%D0%BF%D1%80%D0%BE%D1%81%22%5D;corpname=AranRusj_x&amp;refs=%3Ddoc.urldomain">N</a>
+    </td>
+      <td>изучать  вопрос</td>
+    <td align="right" class="add_commas">8</td>
+      <td>
+        <div class="bar" style="height:10px;width:97px;"></div>
+        <img src="./Frequency list(1)_files/red.png" class="hidden" height="10" width="97" alt="97">
+      </td>
+    </tr>
+    <tr>
+    <td>
+<a href="http://aranea.juls.savba.sk/guest/run.cgi/view?q=aword%2C%5Blemma%3D%22%D0%B8%D0%B7%D1%83%D1%87%D0%B0%D1%82%D1%8C%22%5D+%5Btag%3D%22Nc..a.%2A%22%5D;q=p0+0%3E0+0+%5Bword%3D%22%D0%B8%D0%B7%D1%83%D1%87%D0%B0%D1%82%D1%8C%22%5D%5Bword%3D%22%D0%B0%D1%81%D1%82%D1%80%D0%BE%D0%BB%D0%BE%D0%B3%D0%B8%D1%8E%22%5D;corpname=AranRusj_x&amp;refs=%3Ddoc.urldomain">P</a>&nbsp;|&nbsp;<a href="http://aranea.juls.savba.sk/guest/run.cgi/view?q=aword%2C%5Blemma%3D%22%D0%B8%D0%B7%D1%83%D1%87%D0%B0%D1%82%D1%8C%22%5D+%5Btag%3D%22Nc..a.%2A%22%5D;q=n0+0%3E0+0+%5Bword%3D%22%D0%B8%D0%B7%D1%83%D1%87%D0%B0%D1%82%D1%8C%22%5D%5Bword%3D%22%D0%B0%D1%81%D1%82%D1%80%D0%BE%D0%BB%D0%BE%D0%B3%D0%B8%D1%8E%22%5D;corpname=AranRusj_x&amp;refs=%3Ddoc.urldomain">N</a>
+    </td>
+      <td>изучать  астрологию</td>
+    <td align="right" class="add_commas">8</td>
+      <td>
+        <div class="bar" style="height:10px;width:97px;"></div>
+        <img src="./Frequency list(1)_files/red.png" class="hidden" height="10" width="97" alt="97">
+      </td>
+    </tr>
+    <tr>
+    <td>
+<a href="http://aranea.juls.savba.sk/guest/run.cgi/view?q=aword%2C%5Blemma%3D%22%D0%B8%D0%B7%D1%83%D1%87%D0%B0%D1%82%D1%8C%22%5D+%5Btag%3D%22Nc..a.%2A%22%5D;q=p0+0%3E0+0+%5Bword%3D%22%D0%B8%D0%B7%D1%83%D1%87%D0%B0%D1%82%D1%8C%22%5D%5Bword%3D%22%D0%B7%D0%B0%D0%BA%D0%BE%D0%BD%D1%8B%22%5D;corpname=AranRusj_x&amp;refs=%3Ddoc.urldomain">P</a>&nbsp;|&nbsp;<a href="http://aranea.juls.savba.sk/guest/run.cgi/view?q=aword%2C%5Blemma%3D%22%D0%B8%D0%B7%D1%83%D1%87%D0%B0%D1%82%D1%8C%22%5D+%5Btag%3D%22Nc..a.%2A%22%5D;q=n0+0%3E0+0+%5Bword%3D%22%D0%B8%D0%B7%D1%83%D1%87%D0%B0%D1%82%D1%8C%22%5D%5Bword%3D%22%D0%B7%D0%B0%D0%BA%D0%BE%D0%BD%D1%8B%22%5D;corpname=AranRusj_x&amp;refs=%3Ddoc.urldomain">N</a>
+    </td>
+      <td>изучать  законы</td>
+    <td align="right" class="add_commas">7</td>
+      <td>
+        <div class="bar" style="height:10px;width:85px;"></div>
+        <img src="./Frequency list(1)_files/red.png" class="hidden" height="10" width="85" alt="85">
+      </td>
+    </tr>
+    <tr>
+    <td>
+<a href="http://aranea.juls.savba.sk/guest/run.cgi/view?q=aword%2C%5Blemma%3D%22%D0%B8%D0%B7%D1%83%D1%87%D0%B0%D1%82%D1%8C%22%5D+%5Btag%3D%22Nc..a.%2A%22%5D;q=p0+0%3E0+0+%5Bword%3D%22%D0%B8%D0%B7%D1%83%D1%87%D0%B0%D0%BB%D0%B8%22%5D%5Bword%3D%22%D0%B8%D1%81%D1%82%D0%BE%D1%80%D0%B8%D1%8E%22%5D;corpname=AranRusj_x&amp;refs=%3Ddoc.urldomain">P</a>&nbsp;|&nbsp;<a href="http://aranea.juls.savba.sk/guest/run.cgi/view?q=aword%2C%5Blemma%3D%22%D0%B8%D0%B7%D1%83%D1%87%D0%B0%D1%82%D1%8C%22%5D+%5Btag%3D%22Nc..a.%2A%22%5D;q=n0+0%3E0+0+%5Bword%3D%22%D0%B8%D0%B7%D1%83%D1%87%D0%B0%D0%BB%D0%B8%22%5D%5Bword%3D%22%D0%B8%D1%81%D1%82%D0%BE%D1%80%D0%B8%D1%8E%22%5D;corpname=AranRusj_x&amp;refs=%3Ddoc.urldomain">N</a>
+    </td>
+      <td>изучали  историю</td>
+    <td align="right" class="add_commas">7</td>
+      <td>
+        <div class="bar" style="height:10px;width:85px;"></div>
+        <img src="./Frequency list(1)_files/red.png" class="hidden" height="10" width="85" alt="85">
+      </td>
+    </tr>
+    <tr>
+    <td>
+<a href="http://aranea.juls.savba.sk/guest/run.cgi/view?q=aword%2C%5Blemma%3D%22%D0%B8%D0%B7%D1%83%D1%87%D0%B0%D1%82%D1%8C%22%5D+%5Btag%3D%22Nc..a.%2A%22%5D;q=p0+0%3E0+0+%5Bword%3D%22%D0%B8%D0%B7%D1%83%D1%87%D0%B0%D1%8E%D1%82%22%5D%5Bword%3D%22%D1%80%D1%8B%D0%BD%D0%BE%D0%BA%22%5D;corpname=AranRusj_x&amp;refs=%3Ddoc.urldomain">P</a>&nbsp;|&nbsp;<a href="http://aranea.juls.savba.sk/guest/run.cgi/view?q=aword%2C%5Blemma%3D%22%D0%B8%D0%B7%D1%83%D1%87%D0%B0%D1%82%D1%8C%22%5D+%5Btag%3D%22Nc..a.%2A%22%5D;q=n0+0%3E0+0+%5Bword%3D%22%D0%B8%D0%B7%D1%83%D1%87%D0%B0%D1%8E%D1%82%22%5D%5Bword%3D%22%D1%80%D1%8B%D0%BD%D0%BE%D0%BA%22%5D;corpname=AranRusj_x&amp;refs=%3Ddoc.urldomain">N</a>
+    </td>
+      <td>изучают  рынок</td>
+    <td align="right" class="add_commas">6</td>
+      <td>
+        <div class="bar" style="height:10px;width:73px;"></div>
+        <img src="./Frequency list(1)_files/red.png" class="hidden" height="10" width="73" alt="73">
+      </td>
+    </tr>
+    <tr>
+    <td>
+<a href="http://aranea.juls.savba.sk/guest/run.cgi/view?q=aword%2C%5Blemma%3D%22%D0%B8%D0%B7%D1%83%D1%87%D0%B0%D1%82%D1%8C%22%5D+%5Btag%3D%22Nc..a.%2A%22%5D;q=p0+0%3E0+0+%5Bword%3D%22%D0%B8%D0%B7%D1%83%D1%87%D0%B0%D1%82%D1%8C%22%5D%5Bword%3D%22%D1%81%D0%B2%D0%BE%D0%B9%D1%81%D1%82%D0%B2%D0%B0%22%5D;corpname=AranRusj_x&amp;refs=%3Ddoc.urldomain">P</a>&nbsp;|&nbsp;<a href="http://aranea.juls.savba.sk/guest/run.cgi/view?q=aword%2C%5Blemma%3D%22%D0%B8%D0%B7%D1%83%D1%87%D0%B0%D1%82%D1%8C%22%5D+%5Btag%3D%22Nc..a.%2A%22%5D;q=n0+0%3E0+0+%5Bword%3D%22%D0%B8%D0%B7%D1%83%D1%87%D0%B0%D1%82%D1%8C%22%5D%5Bword%3D%22%D1%81%D0%B2%D0%BE%D0%B9%D1%81%D1%82%D0%B2%D0%B0%22%5D;corpname=AranRusj_x&amp;refs=%3Ddoc.urldomain">N</a>
+    </td>
+      <td>изучать  свойства</td>
+    <td align="right" class="add_commas">6</td>
+      <td>
+        <div class="bar" style="height:10px;width:73px;"></div>
+        <img src="./Frequency list(1)_files/red.png" class="hidden" height="10" width="73" alt="73">
+      </td>
+    </tr>
+    <tr>
+    <td>
+<a href="http://aranea.juls.savba.sk/guest/run.cgi/view?q=aword%2C%5Blemma%3D%22%D0%B8%D0%B7%D1%83%D1%87%D0%B0%D1%82%D1%8C%22%5D+%5Btag%3D%22Nc..a.%2A%22%5D;q=p0+0%3E0+0+%5Bword%3D%22%D0%B8%D0%B7%D1%83%D1%87%D0%B0%D1%82%D1%8C%22%5D%5Bword%3D%22%D0%BC%D0%B0%D1%82%D0%B5%D1%80%D0%B8%D0%B0%D0%BB%22%5D;corpname=AranRusj_x&amp;refs=%3Ddoc.urldomain">P</a>&nbsp;|&nbsp;<a href="http://aranea.juls.savba.sk/guest/run.cgi/view?q=aword%2C%5Blemma%3D%22%D0%B8%D0%B7%D1%83%D1%87%D0%B0%D1%82%D1%8C%22%5D+%5Btag%3D%22Nc..a.%2A%22%5D;q=n0+0%3E0+0+%5Bword%3D%22%D0%B8%D0%B7%D1%83%D1%87%D0%B0%D1%82%D1%8C%22%5D%5Bword%3D%22%D0%BC%D0%B0%D1%82%D0%B5%D1%80%D0%B8%D0%B0%D0%BB%22%5D;corpname=AranRusj_x&amp;refs=%3Ddoc.urldomain">N</a>
+    </td>
+      <td>изучать  материал</td>
+    <td align="right" class="add_commas">6</td>
+      <td>
+        <div class="bar" style="height:10px;width:73px;"></div>
+        <img src="./Frequency list(1)_files/red.png" class="hidden" height="10" width="73" alt="73">
+      </td>
+    </tr>
+    <tr>
+    <td>
+<a href="http://aranea.juls.savba.sk/guest/run.cgi/view?q=aword%2C%5Blemma%3D%22%D0%B8%D0%B7%D1%83%D1%87%D0%B0%D1%82%D1%8C%22%5D+%5Btag%3D%22Nc..a.%2A%22%5D;q=p0+0%3E0+0+%5Bword%3D%22%D0%B8%D0%B7%D1%83%D1%87%D0%B0%D0%BB%22%5D%5Bword%3D%22%D1%84%D0%B8%D0%BB%D0%BE%D1%81%D0%BE%D1%84%D0%B8%D1%8E%22%5D;corpname=AranRusj_x&amp;refs=%3Ddoc.urldomain">P</a>&nbsp;|&nbsp;<a href="http://aranea.juls.savba.sk/guest/run.cgi/view?q=aword%2C%5Blemma%3D%22%D0%B8%D0%B7%D1%83%D1%87%D0%B0%D1%82%D1%8C%22%5D+%5Btag%3D%22Nc..a.%2A%22%5D;q=n0+0%3E0+0+%5Bword%3D%22%D0%B8%D0%B7%D1%83%D1%87%D0%B0%D0%BB%22%5D%5Bword%3D%22%D1%84%D0%B8%D0%BB%D0%BE%D1%81%D0%BE%D1%84%D0%B8%D1%8E%22%5D;corpname=AranRusj_x&amp;refs=%3Ddoc.urldomain">N</a>
+    </td>
+      <td>изучал  философию</td>
+    <td align="right" class="add_commas">6</td>
+      <td>
+        <div class="bar" style="height:10px;width:73px;"></div>
+        <img src="./Frequency list(1)_files/red.png" class="hidden" height="10" width="73" alt="73">
+      </td>
+    </tr>
+    <tr>
+    <td>
+<a href="http://aranea.juls.savba.sk/guest/run.cgi/view?q=aword%2C%5Blemma%3D%22%D0%B8%D0%B7%D1%83%D1%87%D0%B0%D1%82%D1%8C%22%5D+%5Btag%3D%22Nc..a.%2A%22%5D;q=p0+0%3E0+0+%5Bword%3D%22%D0%B8%D0%B7%D1%83%D1%87%D0%B0%D1%8F%22%5D%5Bword%3D%22%D1%8F%D0%B7%D1%8B%D0%BA%22%5D;corpname=AranRusj_x&amp;refs=%3Ddoc.urldomain">P</a>&nbsp;|&nbsp;<a href="http://aranea.juls.savba.sk/guest/run.cgi/view?q=aword%2C%5Blemma%3D%22%D0%B8%D0%B7%D1%83%D1%87%D0%B0%D1%82%D1%8C%22%5D+%5Btag%3D%22Nc..a.%2A%22%5D;q=n0+0%3E0+0+%5Bword%3D%22%D0%B8%D0%B7%D1%83%D1%87%D0%B0%D1%8F%22%5D%5Bword%3D%22%D1%8F%D0%B7%D1%8B%D0%BA%22%5D;corpname=AranRusj_x&amp;refs=%3Ddoc.urldomain">N</a>
+    </td>
+      <td>изучая  язык</td>
+    <td align="right" class="add_commas">5</td>
+      <td>
+        <div class="bar" style="height:10px;width:61px;"></div>
+        <img src="./Frequency list(1)_files/red.png" class="hidden" height="10" width="61" alt="61">
+      </td>
+    </tr>
+    <tr>
+    <td>
+<a href="http://aranea.juls.savba.sk/guest/run.cgi/view?q=aword%2C%5Blemma%3D%22%D0%B8%D0%B7%D1%83%D1%87%D0%B0%D1%82%D1%8C%22%5D+%5Btag%3D%22Nc..a.%2A%22%5D;q=p0+0%3E0+0+%5Bword%3D%22%D0%B8%D0%B7%D1%83%D1%87%D0%B0%D1%8E%D1%89%D0%B8%D0%B9%22%5D%5Bword%3D%22%D1%81%D0%B2%D0%BE%D0%B9%D1%81%D1%82%D0%B2%D0%B0%22%5D;corpname=AranRusj_x&amp;refs=%3Ddoc.urldomain">P</a>&nbsp;|&nbsp;<a href="http://aranea.juls.savba.sk/guest/run.cgi/view?q=aword%2C%5Blemma%3D%22%D0%B8%D0%B7%D1%83%D1%87%D0%B0%D1%82%D1%8C%22%5D+%5Btag%3D%22Nc..a.%2A%22%5D;q=n0+0%3E0+0+%5Bword%3D%22%D0%B8%D0%B7%D1%83%D1%87%D0%B0%D1%8E%D1%89%D0%B8%D0%B9%22%5D%5Bword%3D%22%D1%81%D0%B2%D0%BE%D0%B9%D1%81%D1%82%D0%B2%D0%B0%22%5D;corpname=AranRusj_x&amp;refs=%3Ddoc.urldomain">N</a>
+    </td>
+      <td>изучающий  свойства</td>
+    <td align="right" class="add_commas">5</td>
+      <td>
+        <div class="bar" style="height:10px;width:61px;"></div>
+        <img src="./Frequency list(1)_files/red.png" class="hidden" height="10" width="61" alt="61">
+      </td>
+    </tr>
+    <tr>
+    <td>
+<a href="http://aranea.juls.savba.sk/guest/run.cgi/view?q=aword%2C%5Blemma%3D%22%D0%B8%D0%B7%D1%83%D1%87%D0%B0%D1%82%D1%8C%22%5D+%5Btag%3D%22Nc..a.%2A%22%5D;q=p0+0%3E0+0+%5Bword%3D%22%D0%B8%D0%B7%D1%83%D1%87%D0%B0%D1%8E%D1%82%22%5D%5Bword%3D%22%D0%BC%D0%B0%D1%82%D0%B5%D1%80%D0%B8%D0%B0%D0%BB%D1%8B%22%5D;corpname=AranRusj_x&amp;refs=%3Ddoc.urldomain">P</a>&nbsp;|&nbsp;<a href="http://aranea.juls.savba.sk/guest/run.cgi/view?q=aword%2C%5Blemma%3D%22%D0%B8%D0%B7%D1%83%D1%87%D0%B0%D1%82%D1%8C%22%5D+%5Btag%3D%22Nc..a.%2A%22%5D;q=n0+0%3E0+0+%5Bword%3D%22%D0%B8%D0%B7%D1%83%D1%87%D0%B0%D1%8E%D1%82%22%5D%5Bword%3D%22%D0%BC%D0%B0%D1%82%D0%B5%D1%80%D0%B8%D0%B0%D0%BB%D1%8B%22%5D;corpname=AranRusj_x&amp;refs=%3Ddoc.urldomain">N</a>
+    </td>
+      <td>изучают  материалы</td>
+    <td align="right" class="add_commas">5</td>
+      <td>
+        <div class="bar" style="height:10px;width:61px;"></div>
+        <img src="./Frequency list(1)_files/red.png" class="hidden" height="10" width="61" alt="61">
+      </td>
+    </tr>
+    <tr>
+    <td>
+<a href="http://aranea.juls.savba.sk/guest/run.cgi/view?q=aword%2C%5Blemma%3D%22%D0%B8%D0%B7%D1%83%D1%87%D0%B0%D1%82%D1%8C%22%5D+%5Btag%3D%22Nc..a.%2A%22%5D;q=p0+0%3E0+0+%5Bword%3D%22%D0%B8%D0%B7%D1%83%D1%87%D0%B0%D1%8E%D1%82%22%5D%5Bword%3D%22%D0%B8%D1%81%D1%82%D0%BE%D1%80%D0%B8%D1%8E%22%5D;corpname=AranRusj_x&amp;refs=%3Ddoc.urldomain">P</a>&nbsp;|&nbsp;<a href="http://aranea.juls.savba.sk/guest/run.cgi/view?q=aword%2C%5Blemma%3D%22%D0%B8%D0%B7%D1%83%D1%87%D0%B0%D1%82%D1%8C%22%5D+%5Btag%3D%22Nc..a.%2A%22%5D;q=n0+0%3E0+0+%5Bword%3D%22%D0%B8%D0%B7%D1%83%D1%87%D0%B0%D1%8E%D1%82%22%5D%5Bword%3D%22%D0%B8%D1%81%D1%82%D0%BE%D1%80%D0%B8%D1%8E%22%5D;corpname=AranRusj_x&amp;refs=%3Ddoc.urldomain">N</a>
+    </td>
+      <td>изучают  историю</td>
+    <td align="right" class="add_commas">5</td>
+      <td>
+        <div class="bar" style="height:10px;width:61px;"></div>
+        <img src="./Frequency list(1)_files/red.png" class="hidden" height="10" width="61" alt="61">
+      </td>
+    </tr>
+    <tr>
+    <td>
+<a href="http://aranea.juls.savba.sk/guest/run.cgi/view?q=aword%2C%5Blemma%3D%22%D0%B8%D0%B7%D1%83%D1%87%D0%B0%D1%82%D1%8C%22%5D+%5Btag%3D%22Nc..a.%2A%22%5D;q=p0+0%3E0+0+%5Bword%3D%22%D0%B8%D0%B7%D1%83%D1%87%D0%B0%D1%82%D1%8C%22%5D%5Bword%3D%22%D1%8D%D0%BA%D0%BE%D0%BD%D0%BE%D0%BC%D0%B8%D0%BA%D1%83%22%5D;corpname=AranRusj_x&amp;refs=%3Ddoc.urldomain">P</a>&nbsp;|&nbsp;<a href="http://aranea.juls.savba.sk/guest/run.cgi/view?q=aword%2C%5Blemma%3D%22%D0%B8%D0%B7%D1%83%D1%87%D0%B0%D1%82%D1%8C%22%5D+%5Btag%3D%22Nc..a.%2A%22%5D;q=n0+0%3E0+0+%5Bword%3D%22%D0%B8%D0%B7%D1%83%D1%87%D0%B0%D1%82%D1%8C%22%5D%5Bword%3D%22%D1%8D%D0%BA%D0%BE%D0%BD%D0%BE%D0%BC%D0%B8%D0%BA%D1%83%22%5D;corpname=AranRusj_x&amp;refs=%3Ddoc.urldomain">N</a>
+    </td>
+      <td>изучать  экономику</td>
+    <td align="right" class="add_commas">5</td>
+      <td>
+        <div class="bar" style="height:10px;width:61px;"></div>
+        <img src="./Frequency list(1)_files/red.png" class="hidden" height="10" width="61" alt="61">
+      </td>
+    </tr>
+    <tr>
+    <td>
+<a href="http://aranea.juls.savba.sk/guest/run.cgi/view?q=aword%2C%5Blemma%3D%22%D0%B8%D0%B7%D1%83%D1%87%D0%B0%D1%82%D1%8C%22%5D+%5Btag%3D%22Nc..a.%2A%22%5D;q=p0+0%3E0+0+%5Bword%3D%22%D0%B8%D0%B7%D1%83%D1%87%D0%B0%D1%82%D1%8C%22%5D%5Bword%3D%22%D1%85%D0%B8%D0%BC%D0%B8%D1%8E%22%5D;corpname=AranRusj_x&amp;refs=%3Ddoc.urldomain">P</a>&nbsp;|&nbsp;<a href="http://aranea.juls.savba.sk/guest/run.cgi/view?q=aword%2C%5Blemma%3D%22%D0%B8%D0%B7%D1%83%D1%87%D0%B0%D1%82%D1%8C%22%5D+%5Btag%3D%22Nc..a.%2A%22%5D;q=n0+0%3E0+0+%5Bword%3D%22%D0%B8%D0%B7%D1%83%D1%87%D0%B0%D1%82%D1%8C%22%5D%5Bword%3D%22%D1%85%D0%B8%D0%BC%D0%B8%D1%8E%22%5D;corpname=AranRusj_x&amp;refs=%3Ddoc.urldomain">N</a>
+    </td>
+      <td>изучать  химию</td>
+    <td align="right" class="add_commas">5</td>
+      <td>
+        <div class="bar" style="height:10px;width:61px;"></div>
+        <img src="./Frequency list(1)_files/red.png" class="hidden" height="10" width="61" alt="61">
+      </td>
+    </tr>
+    <tr>
+    <td>
+<a href="http://aranea.juls.savba.sk/guest/run.cgi/view?q=aword%2C%5Blemma%3D%22%D0%B8%D0%B7%D1%83%D1%87%D0%B0%D1%82%D1%8C%22%5D+%5Btag%3D%22Nc..a.%2A%22%5D;q=p0+0%3E0+0+%5Bword%3D%22%D0%B8%D0%B7%D1%83%D1%87%D0%B0%D1%82%D1%8C%22%5D%5Bword%3D%22%D1%84%D0%B8%D0%BB%D0%BE%D1%81%D0%BE%D1%84%D0%B8%D1%8E%22%5D;corpname=AranRusj_x&amp;refs=%3Ddoc.urldomain">P</a>&nbsp;|&nbsp;<a href="http://aranea.juls.savba.sk/guest/run.cgi/view?q=aword%2C%5Blemma%3D%22%D0%B8%D0%B7%D1%83%D1%87%D0%B0%D1%82%D1%8C%22%5D+%5Btag%3D%22Nc..a.%2A%22%5D;q=n0+0%3E0+0+%5Bword%3D%22%D0%B8%D0%B7%D1%83%D1%87%D0%B0%D1%82%D1%8C%22%5D%5Bword%3D%22%D1%84%D0%B8%D0%BB%D0%BE%D1%81%D0%BE%D1%84%D0%B8%D1%8E%22%5D;corpname=AranRusj_x&amp;refs=%3Ddoc.urldomain">N</a>
+    </td>
+      <td>изучать  философию</td>
+    <td align="right" class="add_commas">5</td>
+      <td>
+        <div class="bar" style="height:10px;width:61px;"></div>
+        <img src="./Frequency list(1)_files/red.png" class="hidden" height="10" width="61" alt="61">
+      </td>
+    </tr>
+    <tr>
+    <td>
+<a href="http://aranea.juls.savba.sk/guest/run.cgi/view?q=aword%2C%5Blemma%3D%22%D0%B8%D0%B7%D1%83%D1%87%D0%B0%D1%82%D1%8C%22%5D+%5Btag%3D%22Nc..a.%2A%22%5D;q=p0+0%3E0+0+%5Bword%3D%22%D0%B8%D0%B7%D1%83%D1%87%D0%B0%D1%82%D1%8C%22%5D%5Bword%3D%22%D1%82%D0%B5%D0%BE%D1%80%D0%B8%D1%8E%22%5D;corpname=AranRusj_x&amp;refs=%3Ddoc.urldomain">P</a>&nbsp;|&nbsp;<a href="http://aranea.juls.savba.sk/guest/run.cgi/view?q=aword%2C%5Blemma%3D%22%D0%B8%D0%B7%D1%83%D1%87%D0%B0%D1%82%D1%8C%22%5D+%5Btag%3D%22Nc..a.%2A%22%5D;q=n0+0%3E0+0+%5Bword%3D%22%D0%B8%D0%B7%D1%83%D1%87%D0%B0%D1%82%D1%8C%22%5D%5Bword%3D%22%D1%82%D0%B5%D0%BE%D1%80%D0%B8%D1%8E%22%5D;corpname=AranRusj_x&amp;refs=%3Ddoc.urldomain">N</a>
+    </td>
+      <td>изучать  теорию</td>
+    <td align="right" class="add_commas">5</td>
+      <td>
+        <div class="bar" style="height:10px;width:61px;"></div>
+        <img src="./Frequency list(1)_files/red.png" class="hidden" height="10" width="61" alt="61">
+      </td>
+    </tr>
+    <tr>
+    <td>
+<a href="http://aranea.juls.savba.sk/guest/run.cgi/view?q=aword%2C%5Blemma%3D%22%D0%B8%D0%B7%D1%83%D1%87%D0%B0%D1%82%D1%8C%22%5D+%5Btag%3D%22Nc..a.%2A%22%5D;q=p0+0%3E0+0+%5Bword%3D%22%D0%B8%D0%B7%D1%83%D1%87%D0%B0%D1%82%D1%8C%22%5D%5Bword%3D%22%D1%81%D0%B8%D1%81%D1%82%D0%B5%D0%BC%D1%83%22%5D;corpname=AranRusj_x&amp;refs=%3Ddoc.urldomain">P</a>&nbsp;|&nbsp;<a href="http://aranea.juls.savba.sk/guest/run.cgi/view?q=aword%2C%5Blemma%3D%22%D0%B8%D0%B7%D1%83%D1%87%D0%B0%D1%82%D1%8C%22%5D+%5Btag%3D%22Nc..a.%2A%22%5D;q=n0+0%3E0+0+%5Bword%3D%22%D0%B8%D0%B7%D1%83%D1%87%D0%B0%D1%82%D1%8C%22%5D%5Bword%3D%22%D1%81%D0%B8%D1%81%D1%82%D0%B5%D0%BC%D1%83%22%5D;corpname=AranRusj_x&amp;refs=%3Ddoc.urldomain">N</a>
+    </td>
+      <td>изучать  систему</td>
+    <td align="right" class="add_commas">5</td>
+      <td>
+        <div class="bar" style="height:10px;width:61px;"></div>
+        <img src="./Frequency list(1)_files/red.png" class="hidden" height="10" width="61" alt="61">
+      </td>
+    </tr>
+    <tr>
+    <td>
+<a href="http://aranea.juls.savba.sk/guest/run.cgi/view?q=aword%2C%5Blemma%3D%22%D0%B8%D0%B7%D1%83%D1%87%D0%B0%D1%82%D1%8C%22%5D+%5Btag%3D%22Nc..a.%2A%22%5D;q=p0+0%3E0+0+%5Bword%3D%22%D0%B8%D0%B7%D1%83%D1%87%D0%B0%D1%82%D1%8C%22%5D%5Bword%3D%22%D0%BA%D1%83%D0%BB%D1%8C%D1%82%D1%83%D1%80%D1%83%22%5D;corpname=AranRusj_x&amp;refs=%3Ddoc.urldomain">P</a>&nbsp;|&nbsp;<a href="http://aranea.juls.savba.sk/guest/run.cgi/view?q=aword%2C%5Blemma%3D%22%D0%B8%D0%B7%D1%83%D1%87%D0%B0%D1%82%D1%8C%22%5D+%5Btag%3D%22Nc..a.%2A%22%5D;q=n0+0%3E0+0+%5Bword%3D%22%D0%B8%D0%B7%D1%83%D1%87%D0%B0%D1%82%D1%8C%22%5D%5Bword%3D%22%D0%BA%D1%83%D0%BB%D1%8C%D1%82%D1%83%D1%80%D1%83%22%5D;corpname=AranRusj_x&amp;refs=%3Ddoc.urldomain">N</a>
+    </td>
+      <td>изучать  культуру</td>
+    <td align="right" class="add_commas">5</td>
+      <td>
+        <div class="bar" style="height:10px;width:61px;"></div>
+        <img src="./Frequency list(1)_files/red.png" class="hidden" height="10" width="61" alt="61">
+      </td>
+    </tr>
+    <tr>
+    <td>
+<a href="http://aranea.juls.savba.sk/guest/run.cgi/view?q=aword%2C%5Blemma%3D%22%D0%B8%D0%B7%D1%83%D1%87%D0%B0%D1%82%D1%8C%22%5D+%5Btag%3D%22Nc..a.%2A%22%5D;q=p0+0%3E0+0+%5Bword%3D%22%D0%B8%D0%B7%D1%83%D1%87%D0%B0%D1%82%D1%8C%22%5D%5Bword%3D%22%D0%B8%D0%BD%D1%81%D1%82%D1%80%D1%83%D0%BA%D1%86%D0%B8%D1%8E%22%5D;corpname=AranRusj_x&amp;refs=%3Ddoc.urldomain">P</a>&nbsp;|&nbsp;<a href="http://aranea.juls.savba.sk/guest/run.cgi/view?q=aword%2C%5Blemma%3D%22%D0%B8%D0%B7%D1%83%D1%87%D0%B0%D1%82%D1%8C%22%5D+%5Btag%3D%22Nc..a.%2A%22%5D;q=n0+0%3E0+0+%5Bword%3D%22%D0%B8%D0%B7%D1%83%D1%87%D0%B0%D1%82%D1%8C%22%5D%5Bword%3D%22%D0%B8%D0%BD%D1%81%D1%82%D1%80%D1%83%D0%BA%D1%86%D0%B8%D1%8E%22%5D;corpname=AranRusj_x&amp;refs=%3Ddoc.urldomain">N</a>
+    </td>
+      <td>изучать  инструкцию</td>
+    <td align="right" class="add_commas">5</td>
+      <td>
+        <div class="bar" style="height:10px;width:61px;"></div>
+        <img src="./Frequency list(1)_files/red.png" class="hidden" height="10" width="61" alt="61">
+      </td>
+    </tr>
+    <tr>
+    <td>
+<a href="http://aranea.juls.savba.sk/guest/run.cgi/view?q=aword%2C%5Blemma%3D%22%D0%B8%D0%B7%D1%83%D1%87%D0%B0%D1%82%D1%8C%22%5D+%5Btag%3D%22Nc..a.%2A%22%5D;q=p0+0%3E0+0+%5Bword%3D%22%D0%B8%D0%B7%D1%83%D1%87%D0%B0%D1%82%D1%8C%22%5D%5Bword%3D%22%D0%B4%D0%BE%D0%BA%D1%83%D0%BC%D0%B5%D0%BD%D1%82%D1%8B%22%5D;corpname=AranRusj_x&amp;refs=%3Ddoc.urldomain">P</a>&nbsp;|&nbsp;<a href="http://aranea.juls.savba.sk/guest/run.cgi/view?q=aword%2C%5Blemma%3D%22%D0%B8%D0%B7%D1%83%D1%87%D0%B0%D1%82%D1%8C%22%5D+%5Btag%3D%22Nc..a.%2A%22%5D;q=n0+0%3E0+0+%5Bword%3D%22%D0%B8%D0%B7%D1%83%D1%87%D0%B0%D1%82%D1%8C%22%5D%5Bword%3D%22%D0%B4%D0%BE%D0%BA%D1%83%D0%BC%D0%B5%D0%BD%D1%82%D1%8B%22%5D;corpname=AranRusj_x&amp;refs=%3Ddoc.urldomain">N</a>
+    </td>
+      <td>изучать  документы</td>
+    <td align="right" class="add_commas">5</td>
+      <td>
+        <div class="bar" style="height:10px;width:61px;"></div>
+        <img src="./Frequency list(1)_files/red.png" class="hidden" height="10" width="61" alt="61">
+      </td>
+    </tr>
+    <tr>
+    <td>
+<a href="http://aranea.juls.savba.sk/guest/run.cgi/view?q=aword%2C%5Blemma%3D%22%D0%B8%D0%B7%D1%83%D1%87%D0%B0%D1%82%D1%8C%22%5D+%5Btag%3D%22Nc..a.%2A%22%5D;q=p0+0%3E0+0+%5Bword%3D%22%D0%B8%D0%B7%D1%83%D1%87%D0%B0%D1%82%D1%8C%22%5D%5Bword%3D%22%D0%B2%D0%BB%D0%B8%D1%8F%D0%BD%D0%B8%D0%B5%22%5D;corpname=AranRusj_x&amp;refs=%3Ddoc.urldomain">P</a>&nbsp;|&nbsp;<a href="http://aranea.juls.savba.sk/guest/run.cgi/view?q=aword%2C%5Blemma%3D%22%D0%B8%D0%B7%D1%83%D1%87%D0%B0%D1%82%D1%8C%22%5D+%5Btag%3D%22Nc..a.%2A%22%5D;q=n0+0%3E0+0+%5Bword%3D%22%D0%B8%D0%B7%D1%83%D1%87%D0%B0%D1%82%D1%8C%22%5D%5Bword%3D%22%D0%B2%D0%BB%D0%B8%D1%8F%D0%BD%D0%B8%D0%B5%22%5D;corpname=AranRusj_x&amp;refs=%3Ddoc.urldomain">N</a>
+    </td>
+      <td>изучать  влияние</td>
+    <td align="right" class="add_commas">5</td>
+      <td>
+        <div class="bar" style="height:10px;width:61px;"></div>
+        <img src="./Frequency list(1)_files/red.png" class="hidden" height="10" width="61" alt="61">
+      </td>
+    </tr>
+    <tr>
+    <td>
+<a href="http://aranea.juls.savba.sk/guest/run.cgi/view?q=aword%2C%5Blemma%3D%22%D0%B8%D0%B7%D1%83%D1%87%D0%B0%D1%82%D1%8C%22%5D+%5Btag%3D%22Nc..a.%2A%22%5D;q=p0+0%3E0+0+%5Bword%3D%22%D0%B8%D0%B7%D1%83%D1%87%D0%B0%D0%BB%D0%B8%22%5D%5Bword%3D%22%D0%B2%D0%BE%D0%B7%D0%B4%D0%B5%D0%B9%D1%81%D1%82%D0%B2%D0%B8%D0%B5%22%5D;corpname=AranRusj_x&amp;refs=%3Ddoc.urldomain">P</a>&nbsp;|&nbsp;<a href="http://aranea.juls.savba.sk/guest/run.cgi/view?q=aword%2C%5Blemma%3D%22%D0%B8%D0%B7%D1%83%D1%87%D0%B0%D1%82%D1%8C%22%5D+%5Btag%3D%22Nc..a.%2A%22%5D;q=n0+0%3E0+0+%5Bword%3D%22%D0%B8%D0%B7%D1%83%D1%87%D0%B0%D0%BB%D0%B8%22%5D%5Bword%3D%22%D0%B2%D0%BE%D0%B7%D0%B4%D0%B5%D0%B9%D1%81%D1%82%D0%B2%D0%B8%D0%B5%22%5D;corpname=AranRusj_x&amp;refs=%3Ddoc.urldomain">N</a>
+    </td>
+      <td>изучали  воздействие</td>
+    <td align="right" class="add_commas">5</td>
+      <td>
+        <div class="bar" style="height:10px;width:61px;"></div>
+        <img src="./Frequency list(1)_files/red.png" class="hidden" height="10" width="61" alt="61">
+      </td>
+    </tr>
+    <tr>
+    <td>
+<a href="http://aranea.juls.savba.sk/guest/run.cgi/view?q=aword%2C%5Blemma%3D%22%D0%B8%D0%B7%D1%83%D1%87%D0%B0%D1%82%D1%8C%22%5D+%5Btag%3D%22Nc..a.%2A%22%5D;q=p0+0%3E0+0+%5Bword%3D%22%D0%B8%D0%B7%D1%83%D1%87%D0%B0%D0%B9%D1%82%D0%B5%22%5D%5Bword%3D%22%D0%B8%D0%BD%D1%84%D0%BE%D1%80%D0%BC%D0%B0%D1%86%D0%B8%D1%8E%22%5D;corpname=AranRusj_x&amp;refs=%3Ddoc.urldomain">P</a>&nbsp;|&nbsp;<a href="http://aranea.juls.savba.sk/guest/run.cgi/view?q=aword%2C%5Blemma%3D%22%D0%B8%D0%B7%D1%83%D1%87%D0%B0%D1%82%D1%8C%22%5D+%5Btag%3D%22Nc..a.%2A%22%5D;q=n0+0%3E0+0+%5Bword%3D%22%D0%B8%D0%B7%D1%83%D1%87%D0%B0%D0%B9%D1%82%D0%B5%22%5D%5Bword%3D%22%D0%B8%D0%BD%D1%84%D0%BE%D1%80%D0%BC%D0%B0%D1%86%D0%B8%D1%8E%22%5D;corpname=AranRusj_x&amp;refs=%3Ddoc.urldomain">N</a>
+    </td>
+      <td>изучайте  информацию</td>
+    <td align="right" class="add_commas">5</td>
+      <td>
+        <div class="bar" style="height:10px;width:61px;"></div>
+        <img src="./Frequency list(1)_files/red.png" class="hidden" height="10" width="61" alt="61">
+      </td>
+    </tr>
+    <tr>
+    <td>
+<a href="http://aranea.juls.savba.sk/guest/run.cgi/view?q=aword%2C%5Blemma%3D%22%D0%B8%D0%B7%D1%83%D1%87%D0%B0%D1%82%D1%8C%22%5D+%5Btag%3D%22Nc..a.%2A%22%5D;q=p0+0%3E0+0+%5Bword%3D%22%D0%B8%D0%B7%D1%83%D1%87%D0%B0%D0%B5%D1%82%22%5D%5Bword%3D%22%D1%81%D1%82%D1%80%D0%BE%D0%B5%D0%BD%D0%B8%D0%B5%22%5D;corpname=AranRusj_x&amp;refs=%3Ddoc.urldomain">P</a>&nbsp;|&nbsp;<a href="http://aranea.juls.savba.sk/guest/run.cgi/view?q=aword%2C%5Blemma%3D%22%D0%B8%D0%B7%D1%83%D1%87%D0%B0%D1%82%D1%8C%22%5D+%5Btag%3D%22Nc..a.%2A%22%5D;q=n0+0%3E0+0+%5Bword%3D%22%D0%B8%D0%B7%D1%83%D1%87%D0%B0%D0%B5%D1%82%22%5D%5Bword%3D%22%D1%81%D1%82%D1%80%D0%BE%D0%B5%D0%BD%D0%B8%D0%B5%22%5D;corpname=AranRusj_x&amp;refs=%3Ddoc.urldomain">N</a>
+    </td>
+      <td>изучает  строение</td>
+    <td align="right" class="add_commas">5</td>
+      <td>
+        <div class="bar" style="height:10px;width:61px;"></div>
+        <img src="./Frequency list(1)_files/red.png" class="hidden" height="10" width="61" alt="61">
+      </td>
+    </tr>
+    <tr>
+    <td>
+<a href="http://aranea.juls.savba.sk/guest/run.cgi/view?q=aword%2C%5Blemma%3D%22%D0%B8%D0%B7%D1%83%D1%87%D0%B0%D1%82%D1%8C%22%5D+%5Btag%3D%22Nc..a.%2A%22%5D;q=p0+0%3E0+0+%5Bword%3D%22%D0%B8%D0%B7%D1%83%D1%87%D0%B0%D0%B5%D0%BC%D1%8B%D0%B9%22%5D%5Bword%3D%22%D0%BE%D0%B1%D1%8A%D0%B5%D0%BA%D1%82%22%5D;corpname=AranRusj_x&amp;refs=%3Ddoc.urldomain">P</a>&nbsp;|&nbsp;<a href="http://aranea.juls.savba.sk/guest/run.cgi/view?q=aword%2C%5Blemma%3D%22%D0%B8%D0%B7%D1%83%D1%87%D0%B0%D1%82%D1%8C%22%5D+%5Btag%3D%22Nc..a.%2A%22%5D;q=n0+0%3E0+0+%5Bword%3D%22%D0%B8%D0%B7%D1%83%D1%87%D0%B0%D0%B5%D0%BC%D1%8B%D0%B9%22%5D%5Bword%3D%22%D0%BE%D0%B1%D1%8A%D0%B5%D0%BA%D1%82%22%5D;corpname=AranRusj_x&amp;refs=%3Ddoc.urldomain">N</a>
+    </td>
+      <td>изучаемый  объект</td>
+    <td align="right" class="add_commas">5</td>
+      <td>
+        <div class="bar" style="height:10px;width:61px;"></div>
+        <img src="./Frequency list(1)_files/red.png" class="hidden" height="10" width="61" alt="61">
+      </td>
+    </tr>
+    <tr>
+    <td>
+<a href="http://aranea.juls.savba.sk/guest/run.cgi/view?q=aword%2C%5Blemma%3D%22%D0%B8%D0%B7%D1%83%D1%87%D0%B0%D1%82%D1%8C%22%5D+%5Btag%3D%22Nc..a.%2A%22%5D;q=p0+0%3E0+0+%5Bword%3D%22%D0%98%D0%B7%D1%83%D1%87%D0%B0%D1%8F%22%5D%5Bword%3D%22%D0%B8%D1%81%D1%82%D0%BE%D1%80%D0%B8%D1%8E%22%5D;corpname=AranRusj_x&amp;refs=%3Ddoc.urldomain">P</a>&nbsp;|&nbsp;<a href="http://aranea.juls.savba.sk/guest/run.cgi/view?q=aword%2C%5Blemma%3D%22%D0%B8%D0%B7%D1%83%D1%87%D0%B0%D1%82%D1%8C%22%5D+%5Btag%3D%22Nc..a.%2A%22%5D;q=n0+0%3E0+0+%5Bword%3D%22%D0%98%D0%B7%D1%83%D1%87%D0%B0%D1%8F%22%5D%5Bword%3D%22%D0%B8%D1%81%D1%82%D0%BE%D1%80%D0%B8%D1%8E%22%5D;corpname=AranRusj_x&amp;refs=%3Ddoc.urldomain">N</a>
+    </td>
+      <td>Изучая  историю</td>
+    <td align="right" class="add_commas">5</td>
+      <td>
+        <div class="bar" style="height:10px;width:61px;"></div>
+        <img src="./Frequency list(1)_files/red.png" class="hidden" height="10" width="61" alt="61">
+      </td>
+    </tr>
+    <tr>
+    <td>
+<a href="http://aranea.juls.savba.sk/guest/run.cgi/view?q=aword%2C%5Blemma%3D%22%D0%B8%D0%B7%D1%83%D1%87%D0%B0%D1%82%D1%8C%22%5D+%5Btag%3D%22Nc..a.%2A%22%5D;q=p0+0%3E0+0+%5Bword%3D%22%D0%B8%D0%B7%D1%83%D1%87%D0%B0%D1%8E%D1%82%22%5D%5Bword%3D%22%D1%8F%D0%B7%D1%8B%D0%BA%22%5D;corpname=AranRusj_x&amp;refs=%3Ddoc.urldomain">P</a>&nbsp;|&nbsp;<a href="http://aranea.juls.savba.sk/guest/run.cgi/view?q=aword%2C%5Blemma%3D%22%D0%B8%D0%B7%D1%83%D1%87%D0%B0%D1%82%D1%8C%22%5D+%5Btag%3D%22Nc..a.%2A%22%5D;q=n0+0%3E0+0+%5Bword%3D%22%D0%B8%D0%B7%D1%83%D1%87%D0%B0%D1%8E%D1%82%22%5D%5Bword%3D%22%D1%8F%D0%B7%D1%8B%D0%BA%22%5D;corpname=AranRusj_x&amp;refs=%3Ddoc.urldomain">N</a>
+    </td>
+      <td>изучают  язык</td>
+    <td align="right" class="add_commas">4</td>
+      <td>
+        <div class="bar" style="height:10px;width:49px;"></div>
+        <img src="./Frequency list(1)_files/red.png" class="hidden" height="10" width="49" alt="49">
+      </td>
+    </tr>
+    <tr>
+    <td>
+<a href="http://aranea.juls.savba.sk/guest/run.cgi/view?q=aword%2C%5Blemma%3D%22%D0%B8%D0%B7%D1%83%D1%87%D0%B0%D1%82%D1%8C%22%5D+%5Btag%3D%22Nc..a.%2A%22%5D;q=p0+0%3E0+0+%5Bword%3D%22%D0%B8%D0%B7%D1%83%D1%87%D0%B0%D1%8E%D1%82%22%5D%5Bword%3D%22%D1%81%D0%BE%D1%81%D1%82%D0%BE%D1%8F%D0%BD%D0%B8%D0%B5%22%5D;corpname=AranRusj_x&amp;refs=%3Ddoc.urldomain">P</a>&nbsp;|&nbsp;<a href="http://aranea.juls.savba.sk/guest/run.cgi/view?q=aword%2C%5Blemma%3D%22%D0%B8%D0%B7%D1%83%D1%87%D0%B0%D1%82%D1%8C%22%5D+%5Btag%3D%22Nc..a.%2A%22%5D;q=n0+0%3E0+0+%5Bword%3D%22%D0%B8%D0%B7%D1%83%D1%87%D0%B0%D1%8E%D1%82%22%5D%5Bword%3D%22%D1%81%D0%BE%D1%81%D1%82%D0%BE%D1%8F%D0%BD%D0%B8%D0%B5%22%5D;corpname=AranRusj_x&amp;refs=%3Ddoc.urldomain">N</a>
+    </td>
+      <td>изучают  состояние</td>
+    <td align="right" class="add_commas">4</td>
+      <td>
+        <div class="bar" style="height:10px;width:49px;"></div>
+        <img src="./Frequency list(1)_files/red.png" class="hidden" height="10" width="49" alt="49">
+      </td>
+    </tr>
+    <tr>
+    <td>
+<a href="http://aranea.juls.savba.sk/guest/run.cgi/view?q=aword%2C%5Blemma%3D%22%D0%B8%D0%B7%D1%83%D1%87%D0%B0%D1%82%D1%8C%22%5D+%5Btag%3D%22Nc..a.%2A%22%5D;q=p0+0%3E0+0+%5Bword%3D%22%D0%B8%D0%B7%D1%83%D1%87%D0%B0%D1%8E%D1%82%22%5D%5Bword%3D%22%D1%80%D0%B5%D0%B7%D1%83%D0%BB%D1%8C%D1%82%D0%B0%D1%82%D1%8B%22%5D;corpname=AranRusj_x&amp;refs=%3Ddoc.urldomain">P</a>&nbsp;|&nbsp;<a href="http://aranea.juls.savba.sk/guest/run.cgi/view?q=aword%2C%5Blemma%3D%22%D0%B8%D0%B7%D1%83%D1%87%D0%B0%D1%82%D1%8C%22%5D+%5Btag%3D%22Nc..a.%2A%22%5D;q=n0+0%3E0+0+%5Bword%3D%22%D0%B8%D0%B7%D1%83%D1%87%D0%B0%D1%8E%D1%82%22%5D%5Bword%3D%22%D1%80%D0%B5%D0%B7%D1%83%D0%BB%D1%8C%D1%82%D0%B0%D1%82%D1%8B%22%5D;corpname=AranRusj_x&amp;refs=%3Ddoc.urldomain">N</a>
+    </td>
+      <td>изучают  результаты</td>
+    <td align="right" class="add_commas">4</td>
+      <td>
+        <div class="bar" style="height:10px;width:49px;"></div>
+        <img src="./Frequency list(1)_files/red.png" class="hidden" height="10" width="49" alt="49">
+      </td>
+    </tr>
+    <tr>
+    <td>
+<a href="http://aranea.juls.savba.sk/guest/run.cgi/view?q=aword%2C%5Blemma%3D%22%D0%B8%D0%B7%D1%83%D1%87%D0%B0%D1%82%D1%8C%22%5D+%5Btag%3D%22Nc..a.%2A%22%5D;q=p0+0%3E0+0+%5Bword%3D%22%D0%B8%D0%B7%D1%83%D1%87%D0%B0%D1%8E%D1%82%22%5D%5Bword%3D%22%D0%BC%D0%B0%D1%82%D0%B5%D1%80%D0%B8%D0%B0%D0%BB%22%5D;corpname=AranRusj_x&amp;refs=%3Ddoc.urldomain">P</a>&nbsp;|&nbsp;<a href="http://aranea.juls.savba.sk/guest/run.cgi/view?q=aword%2C%5Blemma%3D%22%D0%B8%D0%B7%D1%83%D1%87%D0%B0%D1%82%D1%8C%22%5D+%5Btag%3D%22Nc..a.%2A%22%5D;q=n0+0%3E0+0+%5Bword%3D%22%D0%B8%D0%B7%D1%83%D1%87%D0%B0%D1%8E%D1%82%22%5D%5Bword%3D%22%D0%BC%D0%B0%D1%82%D0%B5%D1%80%D0%B8%D0%B0%D0%BB%22%5D;corpname=AranRusj_x&amp;refs=%3Ddoc.urldomain">N</a>
+    </td>
+      <td>изучают  материал</td>
+    <td align="right" class="add_commas">4</td>
+      <td>
+        <div class="bar" style="height:10px;width:49px;"></div>
+        <img src="./Frequency list(1)_files/red.png" class="hidden" height="10" width="49" alt="49">
+      </td>
+    </tr>
+    <tr>
+    <td>
+<a href="http://aranea.juls.savba.sk/guest/run.cgi/view?q=aword%2C%5Blemma%3D%22%D0%B8%D0%B7%D1%83%D1%87%D0%B0%D1%82%D1%8C%22%5D+%5Btag%3D%22Nc..a.%2A%22%5D;q=p0+0%3E0+0+%5Bword%3D%22%D0%B8%D0%B7%D1%83%D1%87%D0%B0%D1%8E%D1%82%22%5D%5Bword%3D%22%D0%B8%D0%BD%D1%84%D0%BE%D1%80%D0%BC%D0%B0%D1%86%D0%B8%D1%8E%22%5D;corpname=AranRusj_x&amp;refs=%3Ddoc.urldomain">P</a>&nbsp;|&nbsp;<a href="http://aranea.juls.savba.sk/guest/run.cgi/view?q=aword%2C%5Blemma%3D%22%D0%B8%D0%B7%D1%83%D1%87%D0%B0%D1%82%D1%8C%22%5D+%5Btag%3D%22Nc..a.%2A%22%5D;q=n0+0%3E0+0+%5Bword%3D%22%D0%B8%D0%B7%D1%83%D1%87%D0%B0%D1%8E%D1%82%22%5D%5Bword%3D%22%D0%B8%D0%BD%D1%84%D0%BE%D1%80%D0%BC%D0%B0%D1%86%D0%B8%D1%8E%22%5D;corpname=AranRusj_x&amp;refs=%3Ddoc.urldomain">N</a>
+    </td>
+      <td>изучают  информацию</td>
+    <td align="right" class="add_commas">4</td>
+      <td>
+        <div class="bar" style="height:10px;width:49px;"></div>
+        <img src="./Frequency list(1)_files/red.png" class="hidden" height="10" width="49" alt="49">
+      </td>
+    </tr>
+    <tr>
+    <td>
+<a href="http://aranea.juls.savba.sk/guest/run.cgi/view?q=aword%2C%5Blemma%3D%22%D0%B8%D0%B7%D1%83%D1%87%D0%B0%D1%82%D1%8C%22%5D+%5Btag%3D%22Nc..a.%2A%22%5D;q=p0+0%3E0+0+%5Bword%3D%22%D0%B8%D0%B7%D1%83%D1%87%D0%B0%D1%8E%D1%82%22%5D%5Bword%3D%22%D0%B2%D0%BE%D0%BF%D1%80%D0%BE%D1%81%22%5D;corpname=AranRusj_x&amp;refs=%3Ddoc.urldomain">P</a>&nbsp;|&nbsp;<a href="http://aranea.juls.savba.sk/guest/run.cgi/view?q=aword%2C%5Blemma%3D%22%D0%B8%D0%B7%D1%83%D1%87%D0%B0%D1%82%D1%8C%22%5D+%5Btag%3D%22Nc..a.%2A%22%5D;q=n0+0%3E0+0+%5Bword%3D%22%D0%B8%D0%B7%D1%83%D1%87%D0%B0%D1%8E%D1%82%22%5D%5Bword%3D%22%D0%B2%D0%BE%D0%BF%D1%80%D0%BE%D1%81%22%5D;corpname=AranRusj_x&amp;refs=%3Ddoc.urldomain">N</a>
+    </td>
+      <td>изучают  вопрос</td>
+    <td align="right" class="add_commas">4</td>
+      <td>
+        <div class="bar" style="height:10px;width:49px;"></div>
+        <img src="./Frequency list(1)_files/red.png" class="hidden" height="10" width="49" alt="49">
+      </td>
+    </tr>
+    <tr>
+    <td>
+<a href="http://aranea.juls.savba.sk/guest/run.cgi/view?q=aword%2C%5Blemma%3D%22%D0%B8%D0%B7%D1%83%D1%87%D0%B0%D1%82%D1%8C%22%5D+%5Btag%3D%22Nc..a.%2A%22%5D;q=p0+0%3E0+0+%5Bword%3D%22%D0%B8%D0%B7%D1%83%D1%87%D0%B0%D1%8E%D1%82%22%5D%5Bword%3D%22%D0%B2%D0%BB%D0%B8%D1%8F%D0%BD%D0%B8%D0%B5%22%5D;corpname=AranRusj_x&amp;refs=%3Ddoc.urldomain">P</a>&nbsp;|&nbsp;<a href="http://aranea.juls.savba.sk/guest/run.cgi/view?q=aword%2C%5Blemma%3D%22%D0%B8%D0%B7%D1%83%D1%87%D0%B0%D1%82%D1%8C%22%5D+%5Btag%3D%22Nc..a.%2A%22%5D;q=n0+0%3E0+0+%5Bword%3D%22%D0%B8%D0%B7%D1%83%D1%87%D0%B0%D1%8E%D1%82%22%5D%5Bword%3D%22%D0%B2%D0%BB%D0%B8%D1%8F%D0%BD%D0%B8%D0%B5%22%5D;corpname=AranRusj_x&amp;refs=%3Ddoc.urldomain">N</a>
+    </td>
+      <td>изучают  влияние</td>
+    <td align="right" class="add_commas">4</td>
+      <td>
+        <div class="bar" style="height:10px;width:49px;"></div>
+        <img src="./Frequency list(1)_files/red.png" class="hidden" height="10" width="49" alt="49">
+      </td>
+    </tr>
+    <tr>
+    <td>
+<a href="http://aranea.juls.savba.sk/guest/run.cgi/view?q=aword%2C%5Blemma%3D%22%D0%B8%D0%B7%D1%83%D1%87%D0%B0%D1%82%D1%8C%22%5D+%5Btag%3D%22Nc..a.%2A%22%5D;q=p0+0%3E0+0+%5Bword%3D%22%D0%B8%D0%B7%D1%83%D1%87%D0%B0%D1%8E%D1%82%22%5D%5Bword%3D%22%D0%B0%D1%81%D1%81%D0%BE%D1%80%D1%82%D0%B8%D0%BC%D0%B5%D0%BD%D1%82%22%5D;corpname=AranRusj_x&amp;refs=%3Ddoc.urldomain">P</a>&nbsp;|&nbsp;<a href="http://aranea.juls.savba.sk/guest/run.cgi/view?q=aword%2C%5Blemma%3D%22%D0%B8%D0%B7%D1%83%D1%87%D0%B0%D1%82%D1%8C%22%5D+%5Btag%3D%22Nc..a.%2A%22%5D;q=n0+0%3E0+0+%5Bword%3D%22%D0%B8%D0%B7%D1%83%D1%87%D0%B0%D1%8E%D1%82%22%5D%5Bword%3D%22%D0%B0%D1%81%D1%81%D0%BE%D1%80%D1%82%D0%B8%D0%BC%D0%B5%D0%BD%D1%82%22%5D;corpname=AranRusj_x&amp;refs=%3Ddoc.urldomain">N</a>
+    </td>
+      <td>изучают  ассортимент</td>
+    <td align="right" class="add_commas">4</td>
+      <td>
+        <div class="bar" style="height:10px;width:49px;"></div>
+        <img src="./Frequency list(1)_files/red.png" class="hidden" height="10" width="49" alt="49">
+      </td>
+    </tr>
+</tbody>
+</table>
+
+<div class="bonito-pagination">
+<form action="http://aranea.juls.savba.sk/guest/run.cgi/freqs">
+
+<div class="bonito-pagination-core">
+  
+  <input type="hidden" name="q" value="aword,[lemma=&quot;изучать&quot;] [tag=&quot;Nc..a.*&quot;]">
+  <input type="hidden" name="corpname" value="AranRusj_x">
+  <input type="hidden" name="refs" value="=doc.urldomain">
+
+    <input type="hidden" name="wlpat" value="">
+    <input type="hidden" name="wlattr" value="">
+    <input type="hidden" name="fcrit" value="word/e 0~0&gt;0">
+    <input type="hidden" name="flimit" value="0">
+    <input type="hidden" name="freq_sort" value="">
+    <input type="hidden" name="ml" value="1">
+    <input type="hidden" name="examples" value="0">
+
+    Page
+    <input type="text" name="fpage" value="1" size="4" class="check_input pos_integer" data-errtext="Page must be a positive integer" )"="">
+    <input type="submit" value="Go"> 
+</div>
+  
+  <div class="bonito-pagination-right">
+    <a href="http://aranea.juls.savba.sk/guest/run.cgi/freqs?q=aword%2C%5Blemma%3D%22%D0%B8%D0%B7%D1%83%D1%87%D0%B0%D1%82%D1%8C%22%5D+%5Btag%3D%22Nc..a.%2A%22%5D;corpname=AranRusj_x&amp;refs=%3Ddoc.urldomain;fcrit=word%2Fe+0%7E0%3E0;flimit=0;freq_sort=;ml=1;fpage=1;ftt_include_empty=;examples=0;fpage=2" id="next2">Next &gt;</a>
+  </div>
+</form>
+</div>
+
+
+
+
+ <div id="footer">
+   <div id="lc_logo">
+   <a href="http://www.sketchengine.co.uk/"><img alt="Lexical Computing logo" src="./Frequency list(1)_files/lc_logo_new.png" width="98" height="33"></a>
+   </div>
+   <div id="ske_version">2.36.7-open-2.167.8-open-3.116.13</div>   </div> <!-- div footer -->
+  </div> <!-- container -->
+</div> <!-- content -->
+
+
+<script type="text/javascript">
+function save_uilang(value) {
+  jQuery.cookies.set('uilang', value);
+  window.location.reload();
+}
+</script>
+
+
+<div id="detailframe">
+  <a href="http://aranea.juls.savba.sk/guest/run.cgi/freqs?q=aword%2C%5Blemma%3D%22%D0%B8%D0%B7%D1%83%D1%87%D0%B0%D1%82%D1%8C%22%5D+%5Btag%3D%22Nc..a.%2A%22%5D;corpname=AranRusj_x&amp;refs=%3Ddoc.urldomain;fcrit=word/e+0~0%3E0;ml=1#" id="hideel" onclick="close_detail(); return false;">
+    <i class="fa fa-angle-double-down fa-2x"></i>
+  </a>
+  <div id="detailframecontent"></div>
+  <textarea cols="30" rows="4"></textarea>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</body></html>
